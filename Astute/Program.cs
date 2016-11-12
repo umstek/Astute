@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reactive.Linq;
 
 namespace Astute
 {
-    class Program
+    internal class Program
     {
         public static void Main(string[] args)
         {
-            Input.TcpInput.Subscribe(Console.WriteLine);
+            Observable.Interval(TimeSpan.FromMilliseconds(333)).Select(l => "SHOOT#").Subscribe(Output.TcpOutput);
+            Input.TcpInput.Retry().Subscribe(Console.WriteLine);
+            Console.ReadKey();
         }
     }
 }

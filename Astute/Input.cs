@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reactive.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Astute
 {
@@ -49,15 +46,13 @@ namespace Astute
                     finally
                     {
                         if (exception != null)
-                        {
-                            // Propagate exception in FRP manner. 
                             observer.OnError(exception);
-                        }
-                        observer.OnCompleted();
+                        else
+                            observer.OnCompleted();
                     }
 
                     return () => Console.WriteLine("Observer has unsubscribed");
                 }
-        );
+            );
     }
 }
