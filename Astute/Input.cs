@@ -4,11 +4,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reactive.Linq;
 using System.Text;
+using NLog;
 
 namespace Astute
 {
     public static class Input
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         public static IObservable<string> TcpInput { get; } =
             Observable.Create<string>(observer =>
                 {
@@ -36,22 +39,30 @@ namespace Astute
                                 }
                             }
 
+                            Logger.Info($"Received: {value}");
                             observer.OnNext(value);
                         }
                     }
                     catch (Exception ex)
                     {
                         exception = ex;
+                        Logger.Error(exception);
                     }
                     finally
                     {
                         if (exception != null)
+                        {
+                            Logger.Warn(exception);
                             observer.OnError(exception);
+                        }
                         else
+                        {
+                            Logger.Info("Observable completed. ");
                             observer.OnCompleted();
+                        }
                     }
 
-                    return () => Console.WriteLine("Observer has unsubscribed");
+                    return () => Logger.Info("Observable has unsubscribed. ");
                 }
             );
     }
