@@ -7,7 +7,9 @@ namespace Astute
     {
         public static void Main(string[] args)
         {
-            Observable.Interval(TimeSpan.FromMilliseconds(333)).Select(l => "SHOOT#").Subscribe(Output.TcpOutput);
+            Observable.Interval(TimeSpan.FromSeconds(1))
+                .Select(l => l < 1 ? "JOIN#" : "SHOOT#")
+                .Subscribe(Output.TcpOutput);
             Input.TcpInput.Retry().Subscribe(Console.WriteLine);
             Console.ReadKey();
         }

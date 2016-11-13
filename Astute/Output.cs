@@ -15,7 +15,7 @@ namespace Astute
                 {
                     try
                     {
-                        Logger.Info($"Sending: {stringOutput}");
+                        Logger.Trace($"Sending: {stringOutput}");
                         using (var client = new TcpClient("127.0.0.1", 6000))
                         {
                             var data = Encoding.UTF8.GetBytes(stringOutput);
@@ -26,7 +26,7 @@ namespace Astute
                     {
                         Logger.Error(ex);
                     }
-                }
+                }, exception => Logger.Error(exception), () => Logger.Info("Observable sequence completed. ")
             );
     }
 }

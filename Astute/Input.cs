@@ -22,6 +22,7 @@ namespace Astute
                         // Create and start the listener.
                         var listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7000);
                         listener.Start();
+                        Logger.Info("TcpListener started. ");
 
                         // Listen in an endless loop. 
                         while (true)
@@ -39,7 +40,7 @@ namespace Astute
                                 }
                             }
 
-                            Logger.Info($"Received: {value}");
+                            Logger.Trace($"Received: {value}");
                             observer.OnNext(value);
                         }
                     }
@@ -55,7 +56,7 @@ namespace Astute
                             Logger.Warn(exception);
                             observer.OnError(exception);
                         }
-                        else
+                        else // completed successfully
                         {
                             Logger.Info("Observable completed. ");
                             observer.OnCompleted();
