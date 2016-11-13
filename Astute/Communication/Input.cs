@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -6,7 +6,7 @@ using System.Reactive.Linq;
 using System.Text;
 using NLog;
 
-namespace Astute
+namespace Astute.Communication
 {
     public static class Input
     {

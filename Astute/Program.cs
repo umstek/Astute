@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Reactive.Linq;
+using Astute.Communication;
 
 namespace Astute
 {
-    internal class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {

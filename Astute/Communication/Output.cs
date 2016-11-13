@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Net.Sockets;
 using System.Reactive;
 using System.Text;
 using NLog;
 
-namespace Astute
+namespace Astute.Communication
 {
     public static class Output
     {
