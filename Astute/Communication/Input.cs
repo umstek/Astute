@@ -12,6 +12,9 @@ namespace Astute.Communication
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        ///     Creates an observable stream of strings from TCP.
+        /// </summary>
         public static IObservable<string> TcpInput { get; } =
             Observable.Create<string>(observer =>
                 {

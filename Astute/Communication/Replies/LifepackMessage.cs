@@ -2,7 +2,7 @@
 
 namespace Astute.Communication.Replies
 {
-    public class LifepackMessage
+    public sealed class LifepackMessage : IMessage
     {
         public LifepackMessage(Point location, int remainingTime)
         {

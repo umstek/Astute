@@ -97,7 +97,12 @@
     <Compile Include="Communication\Output.cs" />
     <Compile Include="Communication\Replies\BroadcastMessage.cs" />
     <Compile Include="Communication\Replies\CoinpackMessage.cs" />
+    <Compile Include="Communication\Replies\CommandFailMessage.cs" />
+    <Compile Include="Communication\Replies\CommandFailState.cs" />
+    <Compile Include="Communication\Replies\IMessage.cs" />
     <Compile Include="Communication\Replies\InitiationMessage.cs" />
+    <Compile Include="Communication\Replies\JoinFailMessage.cs" />
+    <Compile Include="Communication\Replies\JoinFailState.cs" />
     <Compile Include="Communication\Replies\JoinMessage.cs" />
     <Compile Include="Communication\Replies\LifepackMessage.cs" />
     <Compile Include="Entity\Command.cs" />

@@ -10,6 +10,9 @@ namespace Astute.Communication
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        ///     Sends observed stream to server via TCP.
+        /// </summary>
         public static IObserver<string> TcpOutput { get; } =
             Observer.Create<string>(stringOutput =>
                 {

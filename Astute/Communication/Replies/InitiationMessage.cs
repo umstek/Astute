@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace Astute.Communication.Replies
 {
-    public sealed class InitiationMessage
+    public sealed class InitiationMessage : IMessage
     {
         public InitiationMessage(int playerNumber, IList<Point> bricks, IList<Point> stones, IList<Point> water)
         {

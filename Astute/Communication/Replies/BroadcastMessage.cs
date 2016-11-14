@@ -4,7 +4,7 @@ using Astute.Entity;
 
 namespace Astute.Communication.Replies
 {
-    public class BroadcastMessage
+    public sealed class BroadcastMessage : IMessage
     {
         public BroadcastMessage(IList<PlayerDetails> playersDetails, IList<DamageDetails> damagesDetails)
         {

@@ -2,7 +2,7 @@
 
 namespace Astute.Communication.Replies
 {
-    public class CoinpackMessage
+    public sealed class CoinpackMessage : IMessage
     {
         public CoinpackMessage(Point location, int remainingTime, int coinValue)
         {

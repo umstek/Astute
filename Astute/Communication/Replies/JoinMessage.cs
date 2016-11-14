@@ -1,9 +1,9 @@
-﻿using System.Windows;
+using System.Windows;
 using Astute.Entity;
 
 namespace Astute.Communication.Replies
 {
-    public sealed class JoinMessage
+    public sealed class JoinMessage : IMessage
     {
         public JoinMessage(int playerNumber, Point location, Direction facingDirection)
         {
