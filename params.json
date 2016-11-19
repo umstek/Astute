@@ -1,0 +1,6 @@
+{
+  "name": "Astute",
+  "tagline": "An astute networking tanks game client. ",
+  "body": "# Astute\r\nAn astute networking tanks game client. \r\n\r\n## Setting-up\r\n1. Clone the project.  \r\n2. Open with Visual Studio.\r\n3. Right Click on the solution in Solution Explorer and select Restore NuGet Packages. \r\n\r\nCopyright © 2016 H. A. W. Abeygunawardhana and K. P. T. K. Bandara.  \r\nAll Rights Reserved.  \r\n\r\n**WARNING:**  \r\nThese materials are unpublished, proprietary, confidential source code of the networking tanks game client \"Astute\".  \r\nAuthors retain all title to and intellectual property rights in these materials.  \r\nUsing the code from this repository is strictly prohibited unless explicitly stated otherwise.  \r\n*All the terms above have usual meanings.*  \r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
