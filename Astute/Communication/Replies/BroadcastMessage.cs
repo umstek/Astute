@@ -15,7 +15,7 @@ namespace Astute.Communication.Replies
         public IList<PlayerDetails> PlayersDetails { get; }
         public IList<DamageDetails> DamagesDetails { get; }
 
-        public class PlayerDetails
+        public sealed class PlayerDetails
         {
             public PlayerDetails(int playerNumber, Point location, Direction facingDirection, bool isShot, int health,
                 int coins, int points)
@@ -37,17 +37,17 @@ namespace Astute.Communication.Replies
             public int Coins { get; }
             public int Points { get; }
         }
-    }
 
-    public class DamageDetails
-    {
-        public DamageDetails(Point location, int damageLevel)
+        public sealed class DamageDetails
         {
-            Location = location;
-            DamageLevel = damageLevel;
-        }
+            public DamageDetails(Point location, int damageLevel)
+            {
+                Location = location;
+                DamageLevel = damageLevel;
+            }
 
-        public Point Location { get; }
-        public int DamageLevel { get; }
+            public Point Location { get; }
+            public int DamageLevel { get; }
+        }
     }
 }
