@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using System.Windows;
+using Astute.Entity;
 
 namespace Astute.Communication.Replies
 {
     public sealed class InitiationMessage : IMessage
     {
-        public InitiationMessage(int playerNumber, IList<Point> bricks, IList<Point> stones, IList<Point> water)
+        public InitiationMessage(int playerNumber, IEnumerable<Point> bricks, IEnumerable<Point> stones,
+            IEnumerable<Point> water)
         {
             PlayerNumber = playerNumber;
             Bricks = bricks;
@@ -14,8 +15,8 @@ namespace Astute.Communication.Replies
         }
 
         public int PlayerNumber { get; }
-        public IList<Point> Bricks { get; }
-        public IList<Point> Stones { get; }
-        public IList<Point> Water { get; }
+        public IEnumerable<Point> Bricks { get; }
+        public IEnumerable<Point> Stones { get; }
+        public IEnumerable<Point> Water { get; }
     }
 }

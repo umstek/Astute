@@ -5,10 +5,10 @@ namespace Astute.Communication
 {
     public static class InputConvertors
     {
-        //public static IMessage ParseMessage(string message)
-        //{
-
-        //}
+        public static string TrimHash(string strWithHash)
+        {
+            return strWithHash.Trim().TrimEnd('#');
+        }
 
         public static IEnumerable<string> SplitByColon(string str)
         {
@@ -25,15 +25,12 @@ namespace Astute.Communication
             return str.Split(',').Select(s => s.Trim()).Where(s => s.Length > 0);
         }
 
-        public static string TrimHash(string strWithHash)
-        {
-            return strWithHash.Trim().TrimEnd('#');
-        }
-
         public static string ScreamingSnakeCaseToCamelCase(string snakeCaseString)
         {
-            return string.Join("",
-                snakeCaseString.Split('_').Select(word => word.Length < 1 ? "" : word[0] + word.Substring(1).ToLower()));
+            return string.Join(
+                "",
+                snakeCaseString.Split('_')
+                    .Select(word => word.Length < 1 ? "" : word[0] + word.Substring(1).ToLower()));
         }
     }
 }

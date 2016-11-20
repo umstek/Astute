@@ -109,6 +109,7 @@
     <Compile Include="Communication\Replies\MessageFactory.cs" />
     <Compile Include="Entity\Command.cs" />
     <Compile Include="Entity\Direction.cs" />
+    <Compile Include="Entity\Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using Astute.Entity;
 
 namespace Astute.Communication.Replies
 {
