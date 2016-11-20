@@ -6,14 +6,14 @@ namespace Astute.Communication.Replies
 {
     public sealed class BroadcastMessage : IMessage
     {
-        public BroadcastMessage(IList<PlayerDetails> playersDetails, IList<DamageDetails> damagesDetails)
+        public BroadcastMessage(IEnumerable<PlayerDetails> playersDetails, IEnumerable<DamageDetails> damagesDetails)
         {
             PlayersDetails = playersDetails;
             DamagesDetails = damagesDetails;
         }
 
-        public IList<PlayerDetails> PlayersDetails { get; }
-        public IList<DamageDetails> DamagesDetails { get; }
+        public IEnumerable<PlayerDetails> PlayersDetails { get; }
+        public IEnumerable<DamageDetails> DamagesDetails { get; }
 
         public sealed class PlayerDetails
         {

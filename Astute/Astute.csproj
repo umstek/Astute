@@ -106,6 +106,7 @@
     <Compile Include="Communication\Replies\JoinFailState.cs" />
     <Compile Include="Communication\Replies\JoinMessage.cs" />
     <Compile Include="Communication\Replies\LifepackMessage.cs" />
+    <Compile Include="Communication\Replies\MessageFactory.cs" />
     <Compile Include="Entity\Command.cs" />
     <Compile Include="Entity\Direction.cs" />
     <Compile Include="Program.cs" />
