@@ -22,7 +22,7 @@ namespace Astute.Communication
                         using (var client = new TcpClient("127.0.0.1", 6000))
                         {
                             var data = Encoding.UTF8.GetBytes(stringOutput);
-                            client.GetStream().Write(Encoding.ASCII.GetBytes(stringOutput), 0, data.Length);
+                            client.GetStream().Write(data, 0, data.Length);
                         }
                     }
                     catch (Exception ex)
