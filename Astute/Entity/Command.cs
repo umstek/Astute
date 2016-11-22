@@ -9,6 +9,7 @@
         Down,
         Right,
         Left,
-        Shoot
+        Shoot,
+        Join
     }
 }

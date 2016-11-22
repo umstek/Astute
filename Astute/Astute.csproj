@@ -96,6 +96,7 @@
     <Compile Include="Communication\InputConvertors.cs" />
     <Compile Include="Communication\Input.cs" />
     <Compile Include="Communication\Output.cs" />
+    <Compile Include="Communication\OutputConvertors.cs" />
     <Compile Include="Communication\Replies\BroadcastMessage.cs" />
     <Compile Include="Communication\Replies\CoinpackMessage.cs" />
     <Compile Include="Communication\Replies\CommandFailMessage.cs" />
