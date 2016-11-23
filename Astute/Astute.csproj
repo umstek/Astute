@@ -108,9 +108,19 @@
     <Compile Include="Communication\Replies\JoinMessage.cs" />
     <Compile Include="Communication\Replies\LifepackMessage.cs" />
     <Compile Include="Communication\Replies\MessageFactory.cs" />
+    <Compile Include="Entity\BrickWall.cs" />
+    <Compile Include="Entity\Coinpack.cs" />
     <Compile Include="Entity\Command.cs" />
     <Compile Include="Entity\Direction.cs" />
+    <Compile Include="Entity\ICollidable.cs" />
+    <Compile Include="Entity\IGridItem.cs" />
+    <Compile Include="Entity\IShootable.cs" />
+    <Compile Include="Entity\ITimeVariant.cs" />
+    <Compile Include="Entity\Lifepack.cs" />
     <Compile Include="Entity\Point.cs" />
+    <Compile Include="Entity\StoneWall.cs" />
+    <Compile Include="Entity\Tank.cs" />
+    <Compile Include="Entity\Water.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
