@@ -11,6 +11,7 @@
 
         public void Collide(Direction direction, Tank tank)
         {
+            tank.Health--;
         }
     }
 }

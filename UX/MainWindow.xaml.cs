@@ -1,8 +1,13 @@
-﻿using System.Reactive.Linq;
+﻿using System;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Astute.Communication;
+using Astute.Communication.Replies;
+using Astute.Engine;
 using Astute.Entity;
+using NLog;
 
 namespace UX
 {
@@ -11,6 +16,9 @@ namespace UX
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly Engine Engine = new Engine();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -22,6 +30,10 @@ namespace UX
                     switch (pattern.EventArgs.Key)
                     {
                         case Key.Enter:
+                            Task.Run(() =>
+                                Input.TcpInput.Retry().Select(MessageFactory.GetMessage)
+                                    .Do(Engine.ReceiveMessage)
+                                    .Subscribe(_ => UpdateGridUI()));
                             return Command.Join;
                         case Key.A: // Fallthrough
                         case Key.Left:
@@ -41,6 +53,11 @@ namespace UX
                 })
                 .Select(OutputConvertors.CommandToString)
                 .Subscribe(Output.TcpOutput);
+        }
+
+        private void UpdateGridUI()
+        {
+            Logger.Info("Update.");
         }
     }
 }

@@ -2,25 +2,37 @@
 using System.Diagnostics;
 using System.Linq;
 using Astute.Entity;
+using NLog;
 using static Astute.Communication.InputConvertors;
 
 namespace Astute.Communication.Replies
 {
     public static class MessageFactory
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         public static IMessage GetMessage(string message)
         {
+            Logger.Info(message);
+
             if (message.Contains(":")) // Long message with information
             {
                 var colonSplitted = SplitByColon(TrimHash(message)).ToArray();
+                Debug.WriteLine(message);
 
                 switch (colonSplitted[0])
                 {
                     case "S": // Accepted join request reply
                         // S:P<num>:<player location x>,<player location y>:<direction>#
-                        var playerNumberS = int.Parse(colonSplitted[1].Substring(1));
-                        var locationS = SplitByComma(colonSplitted[2]).Select(int.Parse).ToArray();
-                        var directionS = int.Parse(colonSplitted[3]);
+                        // BUG Actual format returned is:
+                        // BUG S:P0;0,0;0#
+                        var semicolonSplitted = SplitBySemicolon(colonSplitted[1]).ToArray();
+                        // var playerNumberS = int.Parse(colonSplitted[1].Substring(1));
+                        var playerNumberS = int.Parse(semicolonSplitted[0].Substring(1));
+                        // var locationS = SplitByComma(colonSplitted[2]).Select(int.Parse).ToArray();
+                        var locationS = SplitByComma(semicolonSplitted[1]).Select(int.Parse).ToArray();
+                        // var directionS = int.Parse(colonSplitted[3]);
+                        var directionS = int.Parse(semicolonSplitted[2]);
                         return new JoinMessage(
                             playerNumberS,
                             new Point(locationS[0], locationS[1]),
@@ -49,8 +61,10 @@ namespace Astute.Communication.Replies
 
                     case "G": // Global status update message
                         // G:P1;<player location x>,<player location y>;<direction>;<whether shot>;<health>;<coins>;<points>:...:P5;<player location x>,<player location y>;<direction>;<whether shot>;<health>;<coins>;<points>:<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;..;<x>,<y>,<damage-level>#
+                        // BUG G: P0; 0,0; 0; 0; 100; 0; 0:3,7,0; 2,16,0; 1,5,0; 11,18,0; 12,16,0; 18,14,0; 2,6,0; 9,17,0; 1,8,0#
+                        // BUG G: P0; 0,0; 0; 0; 100; 0; 0:17,4,0; 8,15,0; 12,6,0; 3,7,0; 14,1,0#
                         var playersDetails =
-                            colonSplitted.Skip(1).Take(colonSplitted.Length - 1).Select(SplitBySemicolon).Select(
+                            colonSplitted.Skip(1).Take(colonSplitted.Length - 2).Select(SplitBySemicolon).Select(
                                 details =>
                                 {
                                     var detailsArray = details.ToArray();
