@@ -2,7 +2,10 @@
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using Astute.Communication;
 using Astute.Communication.Replies;
 using Astute.Engine;
@@ -16,8 +19,8 @@ namespace UX
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private static readonly Engine Engine = new Engine();
+        private readonly Engine _engine = new Engine();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public MainWindow()
         {
@@ -32,7 +35,7 @@ namespace UX
                         case Key.Enter:
                             Task.Run(() =>
                                 Input.TcpInput.Retry().Select(MessageFactory.GetMessage)
-                                    .Do(Engine.ReceiveMessage)
+                                    .Do(_engine.ReceiveMessage)
                                     .Subscribe(_ => UpdateGridUI()));
                             return Command.Join;
                         case Key.A: // Fallthrough
@@ -57,7 +60,28 @@ namespace UX
 
         private void UpdateGridUI()
         {
-            Logger.Info("Update.");
+            if (Dispatcher.CheckAccess())
+                for (var i = 0; i < 20; i++)
+                    for (var j = 0; j < 20; j++)
+                    {
+                        var gi = _engine.State.GridItems[i, j];
+                        if (gi is Tank)
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.DarkGreen;
+                        else if (gi is BrickWall)
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Brown;
+                        else if (gi is StoneWall)
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Gray;
+                        else if (gi is Coinpack)
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Gold;
+                        else if (gi is Lifepack)
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Red;
+                        else if (gi is Water)
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Blue;
+                        else
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.White;
+                    }
+            else
+                Dispatcher.Invoke(UpdateGridUI);
         }
     }
 }

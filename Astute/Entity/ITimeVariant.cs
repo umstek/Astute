@@ -4,6 +4,6 @@
     {
         int MaxTimeToDisappear { get; }
         int TimeToDisappear { get; set; }
-        void Tick();
+        bool Tick();
     }
 }

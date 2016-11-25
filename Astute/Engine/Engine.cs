@@ -50,7 +50,7 @@ namespace Astute.Engine
             }
             else
             {
-                Debug.Fail("Unknown message. ");
+                Debug.Fail("Unknown message. 1");
             }
         }
     }

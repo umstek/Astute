@@ -1,6 +1,6 @@
 ﻿namespace Astute.Entity
 {
-    public struct Coinpack : IGridItem, ICollidable, ITimeVariant
+    public class Coinpack : IGridItem, ICollidable, ITimeVariant
     {
         public Coinpack(Point location, int value, int maxTimeToDisappear)
         {
@@ -10,17 +10,19 @@
             TimeToDisappear = maxTimeToDisappear;
         }
 
-        public Point Location { get; }
         public int CoinValue { get; }
-        public int MaxTimeToDisappear { get; }
-        public int TimeToDisappear { get; set; }
 
         public void Collide(Direction direction, Tank tank)
         {
         }
 
-        public void Tick()
+        public Point Location { get; }
+        public int MaxTimeToDisappear { get; }
+        public int TimeToDisappear { get; set; }
+
+        public bool Tick()
         {
+            return --TimeToDisappear == 0;
         }
     }
 }

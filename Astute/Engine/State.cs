@@ -55,30 +55,54 @@ namespace Astute.Engine
         {
             foreach (var playerDetails in playersDetails)
             {
-                Tank tank;
                 var tanks = Tanks.Where(t => t.PlayerNumber == playerDetails.PlayerNumber).ToList();
+                Tank tank;
+
                 if (!tanks.Any())
+                {
                     tank = new Tank(playerDetails.Location, playerDetails.Health, playerDetails.FacingDirection,
                         playerDetails.Points, playerDetails.Coins, playerDetails.PlayerNumber);
+                }
                 else
+                {
                     tank = tanks.First();
+                    GridItems[tank.Location.X, tank.Location.Y] = null;
+                }
+
                 tank.Location = playerDetails.Location;
                 tank.Health = playerDetails.Health;
                 tank.Coins = playerDetails.Coins;
                 tank.Direction = playerDetails.FacingDirection;
                 tank.Points = playerDetails.Points;
+
+                GridItems[tank.Location.X, tank.Location.Y] = tank;
             }
 
             foreach (var damageDetails in damagesDetails)
             {
                 var brick = BrickWalls.First(b => b.Location == damageDetails.Location);
-                brick.Health = damageDetails.DamageLevel;
+                brick.Health = 4 - damageDetails.DamageLevel;
                 if (brick.Health != 0) continue;
 
                 // Brick is broken. 
                 BrickWalls.Remove(brick);
                 GridItems[brick.Location.X, brick.Location.Y] = null;
             }
+
+            // Run clock for TimeVariant Items.
+            // We do NOT use a client based clock, but rather beleive on the once per second broadcasts. 
+            Coinpacks.ForEach(coinpack =>
+            {
+                if (!coinpack.Tick()) return;
+                GridItems[coinpack.Location.X, coinpack.Location.Y] = null;
+                Coinpacks.Remove(coinpack);
+            });
+            Lifepacks.ForEach(lifepack =>
+            {
+                if (!lifepack.Tick()) return;
+                GridItems[lifepack.Location.X, lifepack.Location.Y] = null;
+                Lifepacks.Remove(lifepack);
+            });
         }
 
         public void ShowLifepack(Point location, int remainingTime)
@@ -98,6 +122,7 @@ namespace Astute.Engine
         public void SetMyTank(Tank myTank)
         {
             Tanks.Add(myTank);
+            GridItems[myTank.Location.X, myTank.Location.Y] = myTank;
         }
     }
 }

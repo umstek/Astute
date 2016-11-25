@@ -2,7 +2,7 @@
 
 namespace Astute.Entity
 {
-    public struct Point : IEquatable<Point>
+    public class Point : IEquatable<Point>
     {
         public Point(int x, int y)
         {
@@ -13,14 +13,14 @@ namespace Astute.Entity
         public int X { get; }
         public int Y { get; }
 
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
         public bool Equals(Point other)
         {
             return (X == other.X) && (Y == other.Y);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
         }
 
         public override int GetHashCode()

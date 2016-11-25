@@ -1,6 +1,8 @@
-﻿namespace Astute.Entity
+﻿using System;
+
+namespace Astute.Entity
 {
-    public struct Tank : IMovableGridItem, ICollidable, IShootable
+    public class Tank : IMovableGridItem, ICollidable, IShootable, IEquatable<Tank>
     {
         public Tank(Point location, int health, Direction direction, int points, int coins, int playerNumber,
             bool myTank = false)
@@ -16,7 +18,6 @@
 
         public int PlayerNumber { get; }
         public bool MyTank { get; }
-        public Point Location { get; set; }
         public Direction Direction { get; set; }
         public int Health { get; set; }
         public int Points { get; set; }
@@ -26,9 +27,37 @@
         {
         }
 
+        public bool Equals(Tank other)
+        {
+            return PlayerNumber == other.PlayerNumber;
+        }
+
+        public Point Location { get; set; }
+
         public bool Shoot()
         {
-            return false;
+            return (Health -= 10) == 0;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is Tank && Equals((Tank) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return PlayerNumber;
+        }
+
+        public static bool operator ==(Tank left, Tank right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Tank left, Tank right)
+        {
+            return !left.Equals(right);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Astute.Entity
 {
-    public struct BrickWall : IGridItem, ICollidable, IShootable
+    public class BrickWall : IGridItem, ICollidable, IShootable
     {
         public BrickWall(int maxHealth, Point location)
         {
@@ -9,14 +9,15 @@
             Location = location;
         }
 
-        public Point Location { get; }
         public int MaxHealth { get; }
         public int Health { get; set; }
-
-        public bool Shoot() => Health-- == 0;
 
         public void Collide(Direction direction, Tank tank)
         {
         }
+
+        public Point Location { get; }
+
+        public bool Shoot() => Health-- == 0;
     }
 }

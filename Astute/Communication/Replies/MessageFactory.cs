@@ -61,8 +61,6 @@ namespace Astute.Communication.Replies
 
                     case "G": // Global status update message
                         // G:P1;<player location x>,<player location y>;<direction>;<whether shot>;<health>;<coins>;<points>:...:P5;<player location x>,<player location y>;<direction>;<whether shot>;<health>;<coins>;<points>:<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;..;<x>,<y>,<damage-level>#
-                        // BUG G: P0; 0,0; 0; 0; 100; 0; 0:3,7,0; 2,16,0; 1,5,0; 11,18,0; 12,16,0; 18,14,0; 2,6,0; 9,17,0; 1,8,0#
-                        // BUG G: P0; 0,0; 0; 0; 100; 0; 0:17,4,0; 8,15,0; 12,6,0; 3,7,0; 14,1,0#
                         var playersDetails =
                             colonSplitted.Skip(1).Take(colonSplitted.Length - 2).Select(SplitBySemicolon).Select(
                                 details =>
@@ -120,7 +118,9 @@ namespace Astute.Communication.Replies
             }
 
             // Short-code message
-            var camelCaseCode = ScreamingSnakeCaseToCamelCase(TrimHash(message));
+            // BUG For obstacle, the actual format is OBSTACLE;25#
+            // var camelCaseCode = ScreamingSnakeCaseToCamelCase(TrimHash(message));
+            var camelCaseCode = ScreamingSnakeCaseToCamelCase(SplitBySemicolon(TrimHash(message)).First());
             if (Enum.GetNames(typeof(CommandFailState)).Contains(camelCaseCode))
                 return new CommandFailMessage((CommandFailState) Enum.Parse(typeof(CommandFailState), camelCaseCode));
             if (Enum.GetNames(typeof(JoinFailState)).Contains(camelCaseCode))
