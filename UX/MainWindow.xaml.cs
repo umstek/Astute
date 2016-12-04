@@ -7,7 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Astute.Communication;
-using Astute.Communication.Replies;
+using Astute.Communication.Messages;
 using Astute.Engine;
 using Astute.Entity;
 using NLog;
@@ -85,20 +85,20 @@ namespace UX
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }
-                            ((Rectangle)((StackPanel)MainStack.Children[i]).Children[j]).Fill = gradientBrush;
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = gradientBrush;
                         }
                         else if (gi is BrickWall)
-                            ((Rectangle)((StackPanel)MainStack.Children[i]).Children[j]).Fill = Brushes.Brown;
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Brown;
                         else if (gi is StoneWall)
-                            ((Rectangle)((StackPanel)MainStack.Children[i]).Children[j]).Fill = Brushes.Gray;
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Gray;
                         else if (gi is Coinpack)
-                            ((Rectangle)((StackPanel)MainStack.Children[i]).Children[j]).Fill = Brushes.Gold;
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Gold;
                         else if (gi is Lifepack)
-                            ((Rectangle)((StackPanel)MainStack.Children[i]).Children[j]).Fill = Brushes.Red;
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Red;
                         else if (gi is Water)
-                            ((Rectangle)((StackPanel)MainStack.Children[i]).Children[j]).Fill = Brushes.Blue;
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Blue;
                         else
-                            ((Rectangle)((StackPanel)MainStack.Children[i]).Children[j]).Fill = Brushes.White;
+                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.White;
                     }
             else
                 Dispatcher.Invoke(UpdateGridUI);

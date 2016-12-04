@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Astute.Communication.Replies;
+using Astute.Communication.Messages;
 using Astute.Entity;
 
 namespace Astute.Engine

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Astute.Entity;
 
-namespace Astute.Communication.Replies
+namespace Astute.Communication.Messages
 {
     public sealed class InitiationMessage : IMessage
     {

@@ -1,4 +1,4 @@
-﻿namespace Astute.Communication.Replies
+﻿namespace Astute.Communication.Messages
 {
     public interface IMessage
     {
