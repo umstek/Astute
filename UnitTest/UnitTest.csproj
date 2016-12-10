@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Communication\InputConvertorsTests.cs" />
+    <Compile Include="Communication\OutputConvertorsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
