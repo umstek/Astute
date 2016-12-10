@@ -15,12 +15,17 @@ namespace Astute.Entity
 
         public bool Equals(Point other)
         {
-            return (X == other.X) && (Y == other.Y);
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return X == other.X && Y == other.Y;
         }
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj);
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            var other = obj as Point;
+            return other != null && Equals(other);
         }
 
         public override int GetHashCode()
@@ -33,12 +38,12 @@ namespace Astute.Entity
 
         public static bool operator ==(Point left, Point right)
         {
-            return left.Equals(right);
+            return Equals(left, right);
         }
 
         public static bool operator !=(Point left, Point right)
         {
-            return !left.Equals(right);
+            return !Equals(left, right);
         }
     }
 }
