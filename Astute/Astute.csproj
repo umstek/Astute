@@ -99,6 +99,8 @@
   <ItemGroup>
     <Compile Include="Communication\InputConvertors.cs" />
     <Compile Include="Communication\Input.cs" />
+    <Compile Include="Communication\Messages\DeathMessage.cs" />
+    <Compile Include="Communication\Messages\DeathState.cs" />
     <Compile Include="Communication\Output.cs" />
     <Compile Include="Communication\OutputConvertors.cs" />
     <Compile Include="Communication\Messages\BroadcastMessage.cs" />

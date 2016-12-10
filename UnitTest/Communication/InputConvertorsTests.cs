@@ -1,32 +1,24 @@
 ﻿using System.Linq;
 using Astute.Communication;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace UnitTest.Communication
 {
-    [TestClass]
-    public class InputConvertorsTest
+    [TestFixture]
+    public class InputConvertorsTests
     {
-        [TestMethod]
-        public void TestTrimHash()
-        {
-            var allCapsHash = InputConvertors.TrimHash("ASDF#");
-            Assert.AreEqual("ASDF", allCapsHash);
+//        private void PrintTestResults()
+//        {
+//            var result = TestContext.CurrentContext.Result;
+//            TestContext.Out.WriteLine($@"
+//Out of {result.PassCount + result.FailCount + result.SkipCount + result.InconclusiveCount} tests,
+//    Passed:        {result.PassCount}
+//    Failed:        {result.FailCount}
+//    Inconclusive:  {result.InconclusiveCount}
+//    Skipped:       {result.SkipCount}");
+//        }
 
-            var allCapsHashSpace = InputConvertors.TrimHash("ASDF# ");
-            Assert.AreEqual("ASDF", allCapsHashSpace);
-
-            var allCapsDoubleSpace = InputConvertors.TrimHash(" ASDF ");
-            Assert.AreEqual("ASDF", allCapsDoubleSpace);
-
-            var multiCaseMultiHash = InputConvertors.TrimHash("aBC_deF##");
-            Assert.AreEqual("aBC_deF", multiCaseMultiHash);
-
-            var preserveHashPrefix = InputConvertors.TrimHash("#asdf#zxc#");
-            Assert.AreEqual("#asdf#zxc", preserveHashPrefix);
-        }
-
-        [TestMethod]
+        [Test]
         public void TestScreamingSnakeCaseToCamelCase()
         {
             var someWords = InputConvertors.ScreamingSnakeCaseToCamelCase("SOME_WORDS");
@@ -40,9 +32,15 @@ namespace UnitTest.Communication
 
             var endingUnderscore = InputConvertors.ScreamingSnakeCaseToCamelCase("WHAT_THE_");
             Assert.AreEqual("WhatThe", endingUnderscore);
+
+            var startingUnderscore = InputConvertors.ScreamingSnakeCaseToCamelCase("_WHAT_THE");
+            Assert.AreEqual("WhatThe", startingUnderscore);
+
+            var wrappingUnderscores = InputConvertors.ScreamingSnakeCaseToCamelCase("_WHAT_THE_");
+            Assert.AreEqual("WhatThe", wrappingUnderscores);
         }
 
-        [TestMethod]
+        [Test]
         public void TestSplitByColon()
         {
             const string source =
@@ -58,7 +56,15 @@ namespace UnitTest.Communication
                 }, splitted.ToArray());
         }
 
-        [TestMethod]
+        [Test]
+        public void TestSplitByComma()
+        {
+            const string source = "<player location x>,<player location y>";
+            var splitted = InputConvertors.SplitByComma(source);
+            CollectionAssert.AreEqual(new[] {"<player location x>", "<player location y>"}, splitted.ToArray());
+        }
+
+        [Test]
         public void TestSplitBySemicolon()
         {
             const string source =
@@ -77,12 +83,23 @@ namespace UnitTest.Communication
                 }, splitted.ToArray());
         }
 
-        [TestMethod]
-        public void TestSplitByComma()
+        [Test]
+        public void TrimHashTests()
         {
-            const string source = "<player location x>,<player location y>";
-            var splitted = InputConvertors.SplitByComma(source);
-            CollectionAssert.AreEqual(new[] {"<player location x>", "<player location y>"}, splitted.ToArray());
+            var allCapsHash = InputConvertors.TrimHash("ASDF#");
+            Assert.AreEqual("ASDF", allCapsHash);
+
+            var allCapsHashSpace = InputConvertors.TrimHash("ASDF# ");
+            Assert.AreEqual("ASDF", allCapsHashSpace);
+
+            var allCapsDoubleSpace = InputConvertors.TrimHash(" ASDF ");
+            Assert.AreEqual("ASDF", allCapsDoubleSpace);
+
+            var multiCaseMultiHash = InputConvertors.TrimHash("aBC_deF##");
+            Assert.AreEqual("aBC_deF", multiCaseMultiHash);
+
+            var preserveHashPrefix = InputConvertors.TrimHash("#asdf#zxc#");
+            Assert.AreEqual("#asdf#zxc", preserveHashPrefix);
         }
     }
 }
