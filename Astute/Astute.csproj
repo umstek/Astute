@@ -97,6 +97,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communication\Exceptions\UnknownMessageException.cs" />
     <Compile Include="Communication\InputConvertors.cs" />
     <Compile Include="Communication\Input.cs" />
     <Compile Include="Communication\Messages\DeathMessage.cs" />

@@ -1,4 +1,5 @@
-﻿using Astute.Communication.Messages;
+﻿using Astute.Communication.Exceptions;
+using Astute.Communication.Messages;
 using Astute.Entity;
 using NUnit.Framework;
 
@@ -266,6 +267,13 @@ namespace UnitTest.Communication.Messages
 
             Assert.True(lifepackMessageExpected.GetHashCode() == lifepackMessageCast?.GetHashCode());
             Assert.False(lifepackMessageExpected.GetHashCode() == lifepackMessageUnexpected.GetHashCode());
+        }
+
+        [Test]
+        public void ThrowOnUnknownMessageTest()
+        {
+            var messageString = "unknown message";
+            Assert.Throws<UnknownMessageException>(() => MessageFactory.GetMessage(messageString));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using Astute.Communication.Exceptions;
 using Astute.Entity;
 using NLog;
 
@@ -118,8 +119,8 @@ namespace Astute.Communication.Messages
                             int.Parse(colonSplitted[2]),
                             int.Parse(colonSplitted[3]));
                     default: // Unknown message
-                        Debug.Fail("Unknown message. ");
-                        return null;
+                        throw new UnknownMessageException(message);
+                    // return null;
                 }
             }
 
@@ -134,8 +135,8 @@ namespace Astute.Communication.Messages
             if (Enum.GetNames(typeof(JoinFailState)).Contains(camelCaseCode))
                 return new JoinFailMessage((JoinFailState) Enum.Parse(typeof(JoinFailState), camelCaseCode));
 
-            Debug.Fail("Unknown message. ");
-            return null;
+            throw new UnknownMessageException(message);
+            // return null;
         }
     }
 }
