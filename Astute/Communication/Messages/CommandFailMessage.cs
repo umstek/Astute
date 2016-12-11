@@ -22,6 +22,7 @@ namespace Astute.Communication.Messages
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
+            // ReSharper disable once CanBeReplacedWithTryCastAndCheckForNull
             return obj is CommandFailMessage && Equals((CommandFailMessage) obj);
         }
 

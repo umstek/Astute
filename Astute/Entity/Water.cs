@@ -14,8 +14,6 @@ namespace Astute.Entity
             tank.Health--;
         }
 
-        public Point Location { get; }
-
         public bool Equals(Water other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -23,11 +21,13 @@ namespace Astute.Entity
             return Location.Equals(other.Location);
         }
 
+        public Point Location { get; }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Water) obj);
         }
 

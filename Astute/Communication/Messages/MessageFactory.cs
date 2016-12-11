@@ -24,7 +24,7 @@ namespace Astute.Communication.Messages
                     case "S": // Accepted join request reply
                         // S:P<num>:<player location x>,<player location y>:<direction>#
                         // BUG Actual format returned is:
-                        // BUG S:P0;0,0;0#
+                        // S:P0;0,0;0#
                         var semicolonSplitted = InputConvertors.SplitBySemicolon(colonSplitted[1]).ToArray();
                         // var playerNumberS = int.Parse(colonSplitted[1].Substring(1));
                         var playerNumberS = int.Parse(semicolonSplitted[0].Substring(1));
@@ -112,6 +112,9 @@ namespace Astute.Communication.Messages
 
                         return new CoinpackMessage(
                             new Point(locationC[0], locationC[1]),
+                            // BUG What server sends is two coin values:
+                            // the value at the beginning and the value at the end.
+                            // The time that when the lifepack disappears should be a constant. 
                             int.Parse(colonSplitted[2]),
                             int.Parse(colonSplitted[3]));
                     default: // Unknown message

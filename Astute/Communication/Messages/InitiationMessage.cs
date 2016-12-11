@@ -27,10 +27,10 @@ namespace Astute.Communication.Messages
             if (ReferenceEquals(this, other)) return true;
 
             // Refer BroadcastMessage for comments on how Equals method is implemented. 
-            var bricksEquality = Bricks.Count() == other.Bricks.Count() && Bricks.All(other.Bricks.Contains);
-            var stonesEquality = Stones.Count() == other.Stones.Count() && Stones.All(other.Stones.Contains);
-            var waterEquality = Water.Count() == other.Water.Count() && Water.All(other.Water.Contains);
-            return PlayerNumber == other.PlayerNumber && bricksEquality && stonesEquality && waterEquality;
+            var bricksEquality = (Bricks.Count() == other.Bricks.Count()) && Bricks.All(other.Bricks.Contains);
+            var stonesEquality = (Stones.Count() == other.Stones.Count()) && Stones.All(other.Stones.Contains);
+            var waterEquality = (Water.Count() == other.Water.Count()) && Water.All(other.Water.Contains);
+            return (PlayerNumber == other.PlayerNumber) && bricksEquality && stonesEquality && waterEquality;
         }
 
         public override bool Equals(object obj)
@@ -38,7 +38,7 @@ namespace Astute.Communication.Messages
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             // ReSharper disable once CanBeReplacedWithTryCastAndCheckForNull
-            return obj is InitiationMessage && Equals((InitiationMessage)obj);
+            return obj is InitiationMessage && Equals((InitiationMessage) obj);
         }
 
         public override int GetHashCode()
@@ -47,9 +47,11 @@ namespace Astute.Communication.Messages
             var stonesHash = Stones.Aggregate(0, (i, details) => i ^ details.GetHashCode());
             var waterHash = Water.Aggregate(0, (i, details) => i ^ details.GetHashCode());
 
-            return unchecked(((Bricks.Count() * 397) ^ bricksHash) +
-            ((Stones.Count() * 397) ^ stonesHash) +
-            ((Water.Count() * 397) ^ waterHash));
+            unchecked
+            {
+                return ((Bricks.Count()*397) ^ bricksHash) + ((Stones.Count()*397) ^ stonesHash) +
+                       ((Water.Count()*397) ^ waterHash);
+            }
         }
 
         public static bool operator ==(InitiationMessage left, InitiationMessage right)

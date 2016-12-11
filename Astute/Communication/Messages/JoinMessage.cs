@@ -20,7 +20,8 @@ namespace Astute.Communication.Messages
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return PlayerNumber == other.PlayerNumber && Location.Equals(other.Location) && FacingDirection == other.FacingDirection;
+            return (PlayerNumber == other.PlayerNumber) && Location.Equals(other.Location) &&
+                   (FacingDirection == other.FacingDirection);
         }
 
         public override bool Equals(object obj)
@@ -28,7 +29,7 @@ namespace Astute.Communication.Messages
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             // ReSharper disable once CanBeReplacedWithTryCastAndCheckForNull
-            return obj is JoinMessage && Equals((JoinMessage)obj);
+            return obj is JoinMessage && Equals((JoinMessage) obj);
         }
 
         public override int GetHashCode()
@@ -36,8 +37,8 @@ namespace Astute.Communication.Messages
             unchecked
             {
                 var hashCode = PlayerNumber;
-                hashCode = (hashCode * 397) ^ Location.GetHashCode();
-                hashCode = (hashCode * 397) ^ (int)FacingDirection;
+                hashCode = (hashCode*397) ^ Location.GetHashCode();
+                hashCode = (hashCode*397) ^ (int) FacingDirection;
                 return hashCode;
             }
         }

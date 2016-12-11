@@ -18,22 +18,22 @@ namespace Astute.Entity
         {
         }
 
-        public Point Location { get; }
-
-        public bool Shoot() => Health-- == 0;
-
         public bool Equals(BrickWall other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return MaxHealth == other.MaxHealth && Health == other.Health && Location.Equals(other.Location);
+            return (MaxHealth == other.MaxHealth) && (Health == other.Health) && Location.Equals(other.Location);
         }
+
+        public Point Location { get; }
+
+        public bool Shoot() => Health-- == 0;
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((BrickWall) obj);
         }
 

@@ -17,7 +17,7 @@ namespace Astute.Entity
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return X == other.X && Y == other.Y;
+            return (X == other.X) && (Y == other.Y);
         }
 
         public override bool Equals(object obj)
@@ -25,7 +25,7 @@ namespace Astute.Entity
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             var other = obj as Point;
-            return other != null && Equals(other);
+            return (other != null) && Equals(other);
         }
 
         public override int GetHashCode()

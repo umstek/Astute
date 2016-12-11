@@ -19,7 +19,7 @@ namespace UnitTest.Communication
 //        }
 
         [Test]
-        public void TestScreamingSnakeCaseToCamelCase()
+        public void ScreamingSnakeCaseToCamelCaseTests()
         {
             var someWords = InputConvertors.ScreamingSnakeCaseToCamelCase("SOME_WORDS");
             Assert.AreEqual("SomeWords", someWords);
@@ -41,7 +41,7 @@ namespace UnitTest.Communication
         }
 
         [Test]
-        public void TestSplitByColon()
+        public void SplitByColonTests()
         {
             const string source =
                 "G:P1;<player location x>,<player location y>;<direction>;<whether shot>;<health>;<coins>;<points>:P5;<player location x>,<player location y>;<direction>;<whether shot>;<health>;<coins>;<points>:<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;<x>,<y>,<damage-level><x>,<y>,<damage-level>";
@@ -57,7 +57,7 @@ namespace UnitTest.Communication
         }
 
         [Test]
-        public void TestSplitByComma()
+        public void SplitByCommaTests()
         {
             const string source = "<player location x>,<player location y>";
             var splitted = InputConvertors.SplitByComma(source);
@@ -65,7 +65,7 @@ namespace UnitTest.Communication
         }
 
         [Test]
-        public void TestSplitBySemicolon()
+        public void SplitBySemicolonTests()
         {
             const string source =
                 "P1;<player location x>,<player location y>;<direction>;<whether shot>;<health>;<coins>;<points>";
