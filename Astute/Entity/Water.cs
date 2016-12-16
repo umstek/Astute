@@ -2,16 +2,11 @@
 
 namespace Astute.Entity
 {
-    public class Water : IGridItem, ICollidable, IEquatable<Water>
+    public class Water : IGridItem, IEquatable<Water>
     {
         public Water(Point location)
         {
             Location = location;
-        }
-
-        public void Collide(Direction direction, Tank tank)
-        {
-            tank.Health--;
         }
 
         public bool Equals(Water other)

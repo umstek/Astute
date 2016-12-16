@@ -77,6 +77,7 @@ namespace Astute.Communication.Messages
             public int PlayerNumber { get; }
             public Point Location { get; }
             public Direction FacingDirection { get; }
+            // ReSharper disable once MemberCanBePrivate.Global
             public bool IsShot { get; }
             public int Health { get; }
             public int Coins { get; }

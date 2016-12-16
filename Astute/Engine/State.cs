@@ -5,6 +5,7 @@ using Astute.Entity;
 
 namespace Astute.Engine
 {
+    // TODO Remove class
     public class State
     {
         public State(IEnumerable<Point> brickWalls, IEnumerable<Point> stoneWalls, IEnumerable<Point> waters)
@@ -91,18 +92,18 @@ namespace Astute.Engine
 
             // Run clock for TimeVariant Items.
             // We do NOT use a client based clock, but rather beleive on the once per second broadcasts. 
-            Coinpacks.ForEach(coinpack =>
-            {
-                if (!coinpack.Tick()) return;
-                GridItems[coinpack.Location.X, coinpack.Location.Y] = null;
-                Coinpacks.Remove(coinpack);
-            });
-            Lifepacks.ForEach(lifepack =>
-            {
-                if (!lifepack.Tick()) return;
-                GridItems[lifepack.Location.X, lifepack.Location.Y] = null;
-                Lifepacks.Remove(lifepack);
-            });
+            //Coinpacks.ForEach(coinpack =>
+            //{
+            //    if (!coinpack.Tick()) return;
+            //    GridItems[coinpack.Location.X, coinpack.Location.Y] = null;
+            //    Coinpacks.Remove(coinpack);
+            //});
+            //Lifepacks.ForEach(lifepack =>
+            //{
+            //    if (!lifepack.Tick()) return;
+            //    GridItems[lifepack.Location.X, lifepack.Location.Y] = null;
+            //    Lifepacks.Remove(lifepack);
+            //});
         }
 
         public void ShowLifepack(Point location, int remainingTime)

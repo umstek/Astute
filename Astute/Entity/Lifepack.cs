@@ -1,28 +1,22 @@
 ﻿namespace Astute.Entity
 {
-    public class Lifepack : IGridItem, ICollidable, ITimeVariant
+    public class Lifepack : IGridItem, ITimeVariant
     {
-        public Lifepack(Point location, int healthValue, int maxTimeToDisappear)
+        private const int MaxHealth = 20;
+        public Lifepack(Point location, int healthValue, int timeToDisappear)
         {
             Location = location;
             HealthValue = healthValue;
-            MaxTimeToDisappear = maxTimeToDisappear;
-            TimeToDisappear = maxTimeToDisappear;
+            TimeToDisappear = timeToDisappear;
+        }
+
+        public Lifepack(Point location, int timeToDisappear) : this(location, MaxHealth, timeToDisappear)
+        {
         }
 
         public int HealthValue { get; }
 
-        public void Collide(Direction direction, Tank tank)
-        {
-        }
-
         public Point Location { get; }
-        public int MaxTimeToDisappear { get; }
         public int TimeToDisappear { get; set; }
-
-        public bool Tick()
-        {
-            return --TimeToDisappear == 0;
-        }
     }
 }

@@ -2,15 +2,11 @@
 
 namespace Astute.Entity
 {
-    public class StoneWall : IGridItem, ICollidable, IEquatable<StoneWall>
+    public class StoneWall : IGridItem, IEquatable<StoneWall>
     {
         public StoneWall(Point location)
         {
             Location = location;
-        }
-
-        public void Collide(Direction direction, Tank tank)
-        {
         }
 
         public bool Equals(StoneWall other)

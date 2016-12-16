@@ -2,38 +2,27 @@
 
 namespace Astute.Entity
 {
-    public class Coinpack : IGridItem, ICollidable, ITimeVariant, IEquatable<Coinpack>
+    public class Coinpack : IGridItem, ITimeVariant, IEquatable<Coinpack>
     {
-        public Coinpack(Point location, int value, int maxTimeToDisappear)
+        public Coinpack(Point location, int value, int timeToDisappear)
         {
             Location = location;
             CoinValue = value;
-            MaxTimeToDisappear = maxTimeToDisappear;
-            TimeToDisappear = maxTimeToDisappear;
+            TimeToDisappear = timeToDisappear;
         }
 
         public int CoinValue { get; }
-
-        public void Collide(Direction direction, Tank tank)
-        {
-        }
 
         public bool Equals(Coinpack other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return (CoinValue == other.CoinValue) && Location.Equals(other.Location) &&
-                   (MaxTimeToDisappear == other.MaxTimeToDisappear) && (TimeToDisappear == other.TimeToDisappear);
+                   (TimeToDisappear == other.TimeToDisappear);
         }
 
         public Point Location { get; }
-        public int MaxTimeToDisappear { get; }
         public int TimeToDisappear { get; set; }
-
-        public bool Tick()
-        {
-            return --TimeToDisappear == 0;
-        }
 
         public override bool Equals(object obj)
         {
@@ -48,7 +37,6 @@ namespace Astute.Entity
             {
                 var hashCode = CoinValue;
                 hashCode = (hashCode*397) ^ Location.GetHashCode();
-                hashCode = (hashCode*397) ^ MaxTimeToDisappear;
                 hashCode = (hashCode*397) ^ TimeToDisappear;
                 return hashCode;
             }

@@ -2,47 +2,43 @@
 
 namespace Astute.Entity
 {
-    public class BrickWall : IGridItem, ICollidable, IShootable, IEquatable<BrickWall>
+    public class BrickWall : IGridItem, IEquatable<BrickWall>
     {
-        public BrickWall(int maxHealth, Point location)
+        private const int MaxHealth = 4;
+
+        public BrickWall(int health, Point location)
         {
-            MaxHealth = maxHealth;
-            Health = maxHealth;
+            Health = health;
             Location = location;
         }
 
-        public int MaxHealth { get; }
-        public int Health { get; set; }
-
-        public void Collide(Direction direction, Tank tank)
+        public BrickWall(Point location) : this(MaxHealth, location)
         {
         }
+
+        public int Health { get; set; }
 
         public bool Equals(BrickWall other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return (MaxHealth == other.MaxHealth) && (Health == other.Health) && Location.Equals(other.Location);
+            return (Health == other.Health) && Location.Equals(other.Location);
         }
 
         public Point Location { get; }
-
-        public bool Shoot() => Health-- == 0;
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((BrickWall) obj);
+            return obj.GetType() == GetType() && Equals((BrickWall) obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                var hashCode = MaxHealth;
-                hashCode = (hashCode*397) ^ Health;
+                var hashCode = Health;
                 hashCode = (hashCode*397) ^ Location.GetHashCode();
                 return hashCode;
             }
