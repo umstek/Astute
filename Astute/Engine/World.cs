@@ -223,7 +223,7 @@ namespace Astute.Engine
                 StoneWalls = oldWorld.StoneWalls,
                 Waters = oldWorld.Waters,
                 Tanks = oldWorld.Tanks,
-                Coinpacks = new HashSet<Coinpack>(oldWorld.Coinpacks.Concat(new[] {coinpack})),
+                Coinpacks = new HashSet<Coinpack>(oldWorld.Coinpacks.Concat(new[] { coinpack })),
                 Lifepacks = oldWorld.Lifepacks
             };
         }
@@ -244,8 +244,60 @@ namespace Astute.Engine
                 Waters = oldWorld.Waters,
                 Tanks = oldWorld.Tanks,
                 Coinpacks = oldWorld.Coinpacks,
-                Lifepacks = new HashSet<Lifepack>(oldWorld.Lifepacks.Concat(new[] {lifepack}))
+                Lifepacks = new HashSet<Lifepack>(oldWorld.Lifepacks.Concat(new[] { lifepack }))
             };
+        }
+
+        public static World FromMessage(World oldWorld, IMessage message)
+        {
+            // ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
+
+            if (message is InitiationMessage) // 1
+            {
+                var messageEx = (InitiationMessage)message;
+                return FromInitiationMessage(messageEx);
+            }
+
+            if (message is JoinMessage) // 2
+            {
+                var messageEx = (JoinMessage)message;
+                return FromJoinMessage(oldWorld, messageEx);
+            }
+
+            if (message is JoinFailMessage)
+            {
+                var messageEx = (JoinFailMessage)message;
+                return oldWorld;
+            }
+
+            if (message is BroadcastMessage) // 3
+            {
+                var messageEx = (BroadcastMessage)message;
+                return FromBroadcastMessage(oldWorld, messageEx);
+            }
+
+            if (message is LifepackMessage)
+            {
+                var messageEx = (LifepackMessage)message;
+                return FromLifepackMessage(oldWorld, messageEx);
+            }
+
+            if (message is CoinpackMessage)
+            {
+                var messageEx = (CoinpackMessage)message;
+                return FromCoinpackMessage(oldWorld, messageEx);
+            }
+
+            if (message is CommandFailMessage)
+            {
+                var messageEx = (CommandFailMessage)message;
+                return oldWorld;
+            }
+
+            Debug.Fail("Unknown message. ");
+
+            return oldWorld;
+            // ReSharper restore CanBeReplacedWithTryCastAndCheckForNull
         }
     }
 }
