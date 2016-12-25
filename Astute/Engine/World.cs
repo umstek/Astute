@@ -197,14 +197,14 @@ namespace Astute.Engine
                             .Where(coinpack => coinpack.TimeToDisappear > 1)
                             .Select(
                                 coinpack =>
-                                        new Coinpack(coinpack.Location, coinpack.CoinValue, coinpack.TimeToDisappear - 1))),
+                                    new Coinpack(coinpack.Location, coinpack.CoinValue, coinpack.TimeToDisappear - 1))),
                 Lifepacks =
                     new HashSet<Lifepack>(
                         oldWorld.Lifepacks.ToList()
                             .Where(lifepack => lifepack.TimeToDisappear > 1)
                             .Select(
                                 lifepack =>
-                                        new Lifepack(lifepack.Location, lifepack.HealthValue, lifepack.TimeToDisappear)))
+                                    new Lifepack(lifepack.Location, lifepack.HealthValue, lifepack.TimeToDisappear)))
             };
         }
 
@@ -223,7 +223,7 @@ namespace Astute.Engine
                 StoneWalls = oldWorld.StoneWalls,
                 Waters = oldWorld.Waters,
                 Tanks = oldWorld.Tanks,
-                Coinpacks = new HashSet<Coinpack>(oldWorld.Coinpacks.Concat(new[] { coinpack })),
+                Coinpacks = new HashSet<Coinpack>(oldWorld.Coinpacks.Concat(new[] {coinpack})),
                 Lifepacks = oldWorld.Lifepacks
             };
         }
@@ -244,7 +244,7 @@ namespace Astute.Engine
                 Waters = oldWorld.Waters,
                 Tanks = oldWorld.Tanks,
                 Coinpacks = oldWorld.Coinpacks,
-                Lifepacks = new HashSet<Lifepack>(oldWorld.Lifepacks.Concat(new[] { lifepack }))
+                Lifepacks = new HashSet<Lifepack>(oldWorld.Lifepacks.Concat(new[] {lifepack}))
             };
         }
 
@@ -254,43 +254,43 @@ namespace Astute.Engine
 
             if (message is InitiationMessage) // 1
             {
-                var messageEx = (InitiationMessage)message;
+                var messageEx = (InitiationMessage) message;
                 return FromInitiationMessage(messageEx);
             }
 
             if (message is JoinMessage) // 2
             {
-                var messageEx = (JoinMessage)message;
+                var messageEx = (JoinMessage) message;
                 return FromJoinMessage(oldWorld, messageEx);
             }
 
             if (message is JoinFailMessage)
             {
-                var messageEx = (JoinFailMessage)message;
+                var messageEx = (JoinFailMessage) message;
                 return oldWorld;
             }
 
             if (message is BroadcastMessage) // 3
             {
-                var messageEx = (BroadcastMessage)message;
+                var messageEx = (BroadcastMessage) message;
                 return FromBroadcastMessage(oldWorld, messageEx);
             }
 
             if (message is LifepackMessage)
             {
-                var messageEx = (LifepackMessage)message;
+                var messageEx = (LifepackMessage) message;
                 return FromLifepackMessage(oldWorld, messageEx);
             }
 
             if (message is CoinpackMessage)
             {
-                var messageEx = (CoinpackMessage)message;
+                var messageEx = (CoinpackMessage) message;
                 return FromCoinpackMessage(oldWorld, messageEx);
             }
 
             if (message is CommandFailMessage)
             {
-                var messageEx = (CommandFailMessage)message;
+                var messageEx = (CommandFailMessage) message;
                 return oldWorld;
             }
 

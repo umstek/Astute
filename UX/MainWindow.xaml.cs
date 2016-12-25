@@ -19,7 +19,7 @@ namespace UX
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly Engine _engine = new Engine();
+        private readonly AI _engine = new AI();
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public MainWindow()
@@ -62,44 +62,56 @@ namespace UX
         {
             if (Dispatcher.CheckAccess())
                 for (var i = 0; i < 20; i++)
-                    for (var j = 0; j < 20; j++)
+                for (var j = 0; j < 20; j++)
+                {
+                    var gi = _engine.State.GridItems[i, j];
+                    if (gi is Tank)
                     {
-                        var gi = _engine.State.GridItems[i, j];
-                        if (gi is Tank)
+                        GradientBrush gradientBrush;
+                        switch ((gi as Tank).Direction)
                         {
-                            GradientBrush gradientBrush;
-                            switch ((gi as Tank).Direction)
-                            {
-                                case Direction.North:
-                                    gradientBrush = new LinearGradientBrush(Colors.DarkGreen, Colors.WhiteSmoke, 90);
-                                    break;
-                                case Direction.East:
-                                    gradientBrush = new LinearGradientBrush(Colors.WhiteSmoke, Colors.DarkGreen, 0);
-                                    break;
-                                case Direction.South:
-                                    gradientBrush = new LinearGradientBrush(Colors.WhiteSmoke, Colors.DarkGreen, 90);
-                                    break;
-                                case Direction.West:
-                                    gradientBrush = new LinearGradientBrush(Colors.DarkGreen, Colors.WhiteSmoke, 0);
-                                    break;
-                                default:
-                                    throw new ArgumentOutOfRangeException();
-                            }
-                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = gradientBrush;
+                            case Direction.North:
+                                gradientBrush = new LinearGradientBrush(Colors.DarkGreen, Colors.WhiteSmoke, 90);
+                                break;
+                            case Direction.East:
+                                gradientBrush = new LinearGradientBrush(Colors.WhiteSmoke, Colors.DarkGreen, 0);
+                                break;
+                            case Direction.South:
+                                gradientBrush = new LinearGradientBrush(Colors.WhiteSmoke, Colors.DarkGreen, 90);
+                                break;
+                            case Direction.West:
+                                gradientBrush = new LinearGradientBrush(Colors.DarkGreen, Colors.WhiteSmoke, 0);
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
                         }
-                        else if (gi is BrickWall)
-                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Brown;
-                        else if (gi is StoneWall)
-                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Gray;
-                        else if (gi is Coinpack)
-                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Gold;
-                        else if (gi is Lifepack)
-                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Red;
-                        else if (gi is Water)
-                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Blue;
-                        else
-                            ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.White;
+                        ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = gradientBrush;
                     }
+                    else if (gi is BrickWall)
+                    {
+                        ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Brown;
+                    }
+                    else if (gi is StoneWall)
+                    {
+                        ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Gray;
+                    }
+                    else if (gi is Coinpack)
+                    {
+                        ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Gold;
+                    }
+                    else if (gi is Lifepack)
+                    {
+                        ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Red;
+                    }
+                    else if (gi is Water)
+                    {
+                        ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.Blue;
+                    }
+                    else
+                    {
+                        ((Rectangle) ((StackPanel) MainStack.Children[i]).Children[j]).Fill = Brushes.White;
+                    }
+                }
             else
                 Dispatcher.Invoke(UpdateGridUI);
         }

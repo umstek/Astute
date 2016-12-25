@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using Astute.Communication;
+using Astute.Communication.Messages;
 
 namespace Astute
 {
@@ -8,10 +9,7 @@ namespace Astute
     {
         public static void Main(string[] args)
         {
-            Observable.Interval(TimeSpan.FromSeconds(1))
-                .Select(l => l < 1 ? "JOIN#" : (l < 13 ? "RIGHT#" : "SHOOT#"))
-                .Subscribe(Output.TcpOutput);
-            Input.TcpInput.Retry().Subscribe(Console.WriteLine);
+            Input.TcpInput.Retry().Select(MessageFactory.GetMessage);
             Console.ReadKey();
         }
     }

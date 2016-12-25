@@ -18,7 +18,7 @@ namespace Astute.Communication.Messages
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Location.Equals(other.Location) && (RemainingTime == other.RemainingTime);
+            return Location.Equals(other.Location) && RemainingTime == other.RemainingTime;
         }
 
         public override bool Equals(object obj)
@@ -33,7 +33,7 @@ namespace Astute.Communication.Messages
         {
             unchecked
             {
-                return (Location.GetHashCode()*397) ^ RemainingTime;
+                return (Location.GetHashCode() * 397) ^ RemainingTime;
             }
         }
 

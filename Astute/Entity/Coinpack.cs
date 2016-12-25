@@ -17,8 +17,8 @@ namespace Astute.Entity
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return (CoinValue == other.CoinValue) && Location.Equals(other.Location) &&
-                   (TimeToDisappear == other.TimeToDisappear);
+            return CoinValue == other.CoinValue && Location.Equals(other.Location) &&
+                   TimeToDisappear == other.TimeToDisappear;
         }
 
         public Point Location { get; }
@@ -28,7 +28,7 @@ namespace Astute.Entity
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return (obj.GetType() == GetType()) && Equals((Coinpack) obj);
+            return obj.GetType() == GetType() && Equals((Coinpack) obj);
         }
 
         public override int GetHashCode()
@@ -36,8 +36,8 @@ namespace Astute.Entity
             unchecked
             {
                 var hashCode = CoinValue;
-                hashCode = (hashCode*397) ^ Location.GetHashCode();
-                hashCode = (hashCode*397) ^ TimeToDisappear;
+                hashCode = (hashCode * 397) ^ Location.GetHashCode();
+                hashCode = (hashCode * 397) ^ TimeToDisappear;
                 return hashCode;
             }
         }

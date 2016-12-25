@@ -24,9 +24,9 @@ namespace Astute.Communication.Messages
             // http://stackoverflow.com/questions/3669970/compare-two-listt-objects-for-equality-ignoring-order
             // Items are unique - so lists like {x, x, y} and {x, y, y} are not checked. 
             // So, checking item count for equality and checking all items in one list for existance in the other is enough. 
-            var playerDetailsEquality = (PlayersDetails.Count() == other.PlayersDetails.Count()) &&
+            var playerDetailsEquality = PlayersDetails.Count() == other.PlayersDetails.Count() &&
                                         PlayersDetails.All(other.PlayersDetails.Contains);
-            var damageDetailsEquality = (DamagesDetails.Count() == other.DamagesDetails.Count()) &&
+            var damageDetailsEquality = DamagesDetails.Count() == other.DamagesDetails.Count() &&
                                         DamagesDetails.All(other.DamagesDetails.Contains);
             return playerDetailsEquality && damageDetailsEquality;
         }
@@ -46,8 +46,8 @@ namespace Astute.Communication.Messages
             var playerDetailsHash = PlayersDetails.Aggregate(0, (i, details) => i ^ details.GetHashCode());
             var damageDetailshash = DamagesDetails.Aggregate(0, (i, details) => i ^ details.GetHashCode());
 
-            return unchecked(((PlayersDetails.Count()*397) ^ playerDetailsHash) +
-                             ((DamagesDetails.Count()*397) ^ damageDetailshash));
+            return unchecked(((PlayersDetails.Count() * 397) ^ playerDetailsHash) +
+                             ((DamagesDetails.Count() * 397) ^ damageDetailshash));
         }
 
         public static bool operator ==(BroadcastMessage left, BroadcastMessage right)
@@ -87,9 +87,9 @@ namespace Astute.Communication.Messages
             {
                 if (ReferenceEquals(null, other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return (PlayerNumber == other.PlayerNumber) && Location.Equals(other.Location) &&
-                       (FacingDirection == other.FacingDirection) && (IsShot == other.IsShot) &&
-                       (Health == other.Health) && (Coins == other.Coins) && (Points == other.Points);
+                return PlayerNumber == other.PlayerNumber && Location.Equals(other.Location) &&
+                       FacingDirection == other.FacingDirection && IsShot == other.IsShot &&
+                       Health == other.Health && Coins == other.Coins && Points == other.Points;
             }
 
             public override bool Equals(object obj)
@@ -105,12 +105,12 @@ namespace Astute.Communication.Messages
                 unchecked
                 {
                     var hashCode = PlayerNumber;
-                    hashCode = (hashCode*397) ^ Location.GetHashCode();
-                    hashCode = (hashCode*397) ^ (int) FacingDirection;
-                    hashCode = (hashCode*397) ^ IsShot.GetHashCode();
-                    hashCode = (hashCode*397) ^ Health;
-                    hashCode = (hashCode*397) ^ Coins;
-                    hashCode = (hashCode*397) ^ Points;
+                    hashCode = (hashCode * 397) ^ Location.GetHashCode();
+                    hashCode = (hashCode * 397) ^ (int) FacingDirection;
+                    hashCode = (hashCode * 397) ^ IsShot.GetHashCode();
+                    hashCode = (hashCode * 397) ^ Health;
+                    hashCode = (hashCode * 397) ^ Coins;
+                    hashCode = (hashCode * 397) ^ Points;
                     return hashCode;
                 }
             }
@@ -141,7 +141,7 @@ namespace Astute.Communication.Messages
             {
                 if (ReferenceEquals(null, other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return Location.Equals(other.Location) && (DamageLevel == other.DamageLevel);
+                return Location.Equals(other.Location) && DamageLevel == other.DamageLevel;
             }
 
             public override bool Equals(object obj)
@@ -156,7 +156,7 @@ namespace Astute.Communication.Messages
             {
                 unchecked
                 {
-                    return (Location.GetHashCode()*397) ^ DamageLevel;
+                    return (Location.GetHashCode() * 397) ^ DamageLevel;
                 }
             }
 

@@ -20,8 +20,8 @@ namespace Astute.Communication.Messages
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Location.Equals(other.Location) && (RemainingTime == other.RemainingTime) &&
-                   (CoinValue == other.CoinValue);
+            return Location.Equals(other.Location) && RemainingTime == other.RemainingTime &&
+                   CoinValue == other.CoinValue;
         }
 
         public override bool Equals(object obj)
@@ -37,8 +37,8 @@ namespace Astute.Communication.Messages
             unchecked
             {
                 var hashCode = Location.GetHashCode();
-                hashCode = (hashCode*397) ^ RemainingTime;
-                hashCode = (hashCode*397) ^ CoinValue;
+                hashCode = (hashCode * 397) ^ RemainingTime;
+                hashCode = (hashCode * 397) ^ CoinValue;
                 return hashCode;
             }
         }

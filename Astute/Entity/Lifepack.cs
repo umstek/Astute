@@ -3,6 +3,7 @@
     public class Lifepack : IGridItem, ITimeVariant
     {
         private const int MaxHealth = 20;
+
         public Lifepack(Point location, int healthValue, int timeToDisappear)
         {
             Location = location;

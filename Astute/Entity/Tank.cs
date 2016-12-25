@@ -8,7 +8,8 @@ namespace Astute.Entity
         public const int InitialPoints = 0;
         public const int InitialCoins = 0;
 
-        public Tank(Point location, int health, Direction direction, int points, int coins, int playerNumber, bool isFiring = false, bool myTank = false)
+        public Tank(Point location, int health, Direction direction, int points, int coins, int playerNumber,
+            bool isFiring = false, bool myTank = false)
         {
             Location = location;
             Direction = direction;
@@ -31,7 +32,7 @@ namespace Astute.Entity
         public int Health { get; set; }
         public int Points { get; set; }
         public int Coins { get; set; }
-        public bool IsFiring { get; set; } 
+        public bool IsFiring { get; set; }
 
         public bool Equals(Tank other)
         {

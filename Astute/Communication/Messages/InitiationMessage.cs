@@ -27,10 +27,10 @@ namespace Astute.Communication.Messages
             if (ReferenceEquals(this, other)) return true;
 
             // Refer BroadcastMessage for comments on how Equals method is implemented. 
-            var bricksEquality = (Bricks.Count() == other.Bricks.Count()) && Bricks.All(other.Bricks.Contains);
-            var stonesEquality = (Stones.Count() == other.Stones.Count()) && Stones.All(other.Stones.Contains);
-            var waterEquality = (Water.Count() == other.Water.Count()) && Water.All(other.Water.Contains);
-            return (PlayerNumber == other.PlayerNumber) && bricksEquality && stonesEquality && waterEquality;
+            var bricksEquality = Bricks.Count() == other.Bricks.Count() && Bricks.All(other.Bricks.Contains);
+            var stonesEquality = Stones.Count() == other.Stones.Count() && Stones.All(other.Stones.Contains);
+            var waterEquality = Water.Count() == other.Water.Count() && Water.All(other.Water.Contains);
+            return PlayerNumber == other.PlayerNumber && bricksEquality && stonesEquality && waterEquality;
         }
 
         public override bool Equals(object obj)
@@ -49,8 +49,8 @@ namespace Astute.Communication.Messages
 
             unchecked
             {
-                return ((Bricks.Count()*397) ^ bricksHash) + ((Stones.Count()*397) ^ stonesHash) +
-                       ((Water.Count()*397) ^ waterHash);
+                return ((Bricks.Count() * 397) ^ bricksHash) + ((Stones.Count() * 397) ^ stonesHash) +
+                       ((Water.Count() * 397) ^ waterHash);
             }
         }
 

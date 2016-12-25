@@ -22,7 +22,7 @@ namespace Astute.Entity
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return (Health == other.Health) && Location.Equals(other.Location);
+            return Health == other.Health && Location.Equals(other.Location);
         }
 
         public Point Location { get; }
@@ -39,7 +39,7 @@ namespace Astute.Entity
             unchecked
             {
                 var hashCode = Health;
-                hashCode = (hashCode*397) ^ Location.GetHashCode();
+                hashCode = (hashCode * 397) ^ Location.GetHashCode();
                 return hashCode;
             }
         }
