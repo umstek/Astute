@@ -19,7 +19,7 @@ namespace UX
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly AI _engine = new AI();
+        private readonly Engine _engine = new AI();
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public MainWindow()

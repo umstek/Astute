@@ -61,6 +61,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Reactive.Core, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
@@ -116,7 +117,7 @@
     <Compile Include="Communication\Messages\LifepackMessage.cs" />
     <Compile Include="Communication\Messages\MessageFactory.cs" />
     <Compile Include="Configuration\Configuration.cs" />
-    <Compile Include="Engine\AI.cs" />
+    <Compile Include="Engine\Engine.cs" />
     <Compile Include="Engine\World.cs" />
     <Compile Include="Entity\BrickWall.cs" />
     <Compile Include="Entity\Coinpack.cs" />
