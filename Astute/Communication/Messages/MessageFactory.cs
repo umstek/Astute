@@ -134,7 +134,7 @@ namespace Astute.Communication.Messages
                 return new CommandFailMessage((CommandFailState) Enum.Parse(typeof(CommandFailState), camelCaseCode));
             if (Enum.GetNames(typeof(JoinFailState)).Contains(camelCaseCode))
                 return new JoinFailMessage((JoinFailState) Enum.Parse(typeof(JoinFailState), camelCaseCode));
-
+            // TODO Add PITFALL# plus all death messages. 
             throw new UnknownMessageException(message);
             // return null;
         }

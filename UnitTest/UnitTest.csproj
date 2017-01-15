@@ -79,6 +79,7 @@
     <Compile Include="Communication\InputConvertorsTests.cs" />
     <Compile Include="Communication\Messages\MessageFactoryTests.cs" />
     <Compile Include="Communication\OutputConvertorsTests.cs" />
+    <Compile Include="Engine\EngineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

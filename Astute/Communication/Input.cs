@@ -37,13 +37,13 @@ namespace Astute.Communication
                                 using (var memoryStream = new MemoryStream())
                                 {
                                     networkStream.CopyTo(memoryStream);
-
-                                    // TODO check encoding
                                     value = Encoding.UTF8.GetString(memoryStream.ToArray());
                                 }
                             }
 
                             Logger.Trace($"Received: {value}");
+                            // BUG When inputs are received too fast, two inputs maybe sent in one string
+                            // e.g.: TOO_QUICK#TOO_QUICK#
                             observer.OnNext(value);
                         }
                     }
