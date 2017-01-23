@@ -23,7 +23,8 @@ namespace Astute
                 .Select(MessageFactory.GetMessage)
                 .Scan<IMessage, Tuple<World, IMessage>>(null, TransformWorldAndCombine)
                 .Scan<Tuple<World, IMessage>, IEnumerable<Tuple<World, Command?>>>(
-                    new Tuple<World, Command?>[] {}, ComputeCommndAndBuffer)
+                    new Tuple<World, Command?>[] {}, ComputeCommndAndBuffer
+                )
                 .Select(tuples => tuples.Last().Item2)
                 .Where(command => command != null)
                 .Select(command => command.GetValueOrDefault(Command.Shoot))
