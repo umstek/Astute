@@ -175,10 +175,10 @@ namespace Astute.Engine
             });
 
             var tanks = message.PlayersDetails.ToArray()
-                .Select(
-                    details =>
-                        new Tank(details.Location, details.Health, details.FacingDirection, details.Points,
-                            details.Coins, details.PlayerNumber, details.PlayerNumber == oldWorld.PlayerNumber));
+                .Select(details =>
+                    new Tank(details.Location, details.Health, details.FacingDirection, details.Points,
+                        details.Coins, details.PlayerNumber, details.PlayerNumber == oldWorld.PlayerNumber)
+                );
 
             return new World(oldWorld.PlayerNumber)
             {
@@ -195,16 +195,18 @@ namespace Astute.Engine
                     new HashSet<Coinpack>(
                         oldWorld.Coinpacks.ToList()
                             .Where(coinpack => coinpack.TimeToDisappear > 1)
-                            .Select(
-                                coinpack =>
-                                    new Coinpack(coinpack.Location, coinpack.CoinValue, coinpack.TimeToDisappear - 1))),
+                            .Select(coinpack =>
+                                new Coinpack(coinpack.Location, coinpack.CoinValue, coinpack.TimeToDisappear - 1)
+                            )
+                    ),
                 Lifepacks =
                     new HashSet<Lifepack>(
                         oldWorld.Lifepacks.ToList()
                             .Where(lifepack => lifepack.TimeToDisappear > 1)
-                            .Select(
-                                lifepack =>
-                                    new Lifepack(lifepack.Location, lifepack.HealthValue, lifepack.TimeToDisappear)))
+                            .Select(lifepack =>
+                                new Lifepack(lifepack.Location, lifepack.HealthValue, lifepack.TimeToDisappear - 1)
+                            )
+                    )
             };
         }
 
