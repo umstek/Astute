@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using Astute.Communication;
 using Astute.Communication.Messages;
 using Astute.Engine;
@@ -19,15 +21,9 @@ namespace UX
         {
             InitializeComponent();
 
-            Output.TcpOutput.OnNext(OutputConvertors.CommandToString(Command.Join));
-
-            Task.Run(() =>
-            {
-                SubscriptionManager.StateAndMessageStream.Subscribe(
-                    stateAndMessage => RenderWorld(stateAndMessage.Item1, stateAndMessage.Item2)
-                );
-                SubscriptionManager.StateAndMessageStream.Connect();
-            });
+            SubscriptionManager.StateAndMessageStream.Subscribe(
+                stateAndMessage => RenderWorld(stateAndMessage.Item1, stateAndMessage.Item2)
+            );
         }
 
         private void RenderWorld(World world, IMessage message)
@@ -46,6 +42,12 @@ namespace UX
             {
                 Dispatcher.Invoke(() => RenderWorld(world, message));
             }
+        }
+
+        private void ConnectButton_Click(object sender, RoutedEventArgs e)
+        {
+            Output.TcpOutput.OnNext(OutputConvertors.CommandToString(Command.Join));
+            Task.Run(() => SubscriptionManager.StateAndMessageStream.Connect());
         }
     }
 }
