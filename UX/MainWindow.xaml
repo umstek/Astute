@@ -1,23 +1,24 @@
 ﻿<controls:MetroWindow
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:local="clr-namespace:UX"
-                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:loader="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
-                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-                      x:Class="UX.MainWindow"
-                      mc:Ignorable="d"
-                      Title=".: Astute :." Width="1280" Height="720" ShowMaxRestoreButton="False"
-                      WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="CanMinimize"
-                      IgnoreTaskbarOnMaximize="True" TitleAlignment="Center" SnapsToDevicePixels="True" ShowTitleBar="False">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:UX"
+    xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:loader="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    x:Class="UX.MainWindow"
+    mc:Ignorable="d"
+    Title=".: Astute :." Width="1280" Height="720" ShowMaxRestoreButton="False"
+    WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="CanMinimize"
+    IgnoreTaskbarOnMaximize="True" TitleAlignment="Center" SnapsToDevicePixels="True" ShowTitleBar="False">
 
     <controls:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingArcsRing.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingArcsRing.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </controls:MetroWindow.Resources>
@@ -29,23 +30,28 @@
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands ShowLastSeparator="False">
             <Button
-                    Content="{iconPacks:PackIconMaterial Tune}"
-                    ToolTip="Settings" />
+                Content="{iconPacks:PackIconMaterial Console}"
+                ToolTip="Console" />
+            <Button
+                Content="{iconPacks:PackIconMaterial Tune}"
+                ToolTip="Settings" />
 
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="691" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="100*" />
+            <ColumnDefinition Width="83*" />
         </Grid.ColumnDefinitions>
-        <Grid Margin="10" />
-        <Button x:Name="button" Style="{DynamicResource MetroCircleButtonStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="175,130,0,0" VerticalAlignment="Top" Width="75" Height="75">
-            <iconPacks:PackIconMaterial Kind="EmoticonCool" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto" />
-        </Button>
+        <Grid Margin="10" x:Name="MainGrid" />
 
-        <loader:LoadingIndicator Grid.Column="1" HorizontalAlignment="Right" Height="100" VerticalAlignment="Top" Width="100" SpeedRatio="1" Style="{DynamicResource LoadingIndicatorDoubleBounceStyle}"/>
-        <Label x:Name="label" Content="Astute" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" FontFamily="Old English Text MT" FontSize="64"/>
+        <loader:LoadingIndicator Grid.Column="1" HorizontalAlignment="Right" Height="100" VerticalAlignment="Top"
+                                 Width="100" SpeedRatio="1" Style="{DynamicResource LoadingIndicatorDoubleBounceStyle}" />
+        <Label x:Name="label" Content="Astute" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,10,0"
+               VerticalAlignment="Top" FontFamily="Old English Text MT" FontSize="64" Height="88" Width="180" />
+        <ScrollViewer Grid.Column="1" Margin="0,105,10,202" HorizontalAlignment="Right" Width="180">
+            <StackPanel x:Name="StatsStackPanel" />
+        </ScrollViewer>
     </Grid>
 </controls:MetroWindow>
