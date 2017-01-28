@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Astute.Configuration;
 
 namespace UX
 {
@@ -7,5 +8,9 @@ namespace UX
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            FileIO.SaveConfiguration(Configuration.Config);
+        }
     }
 }

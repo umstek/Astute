@@ -114,18 +114,16 @@ namespace Astute.Communication.Messages
 
                         return new LifepackMessage(
                             new Point(locationL[0], locationL[1]),
-                            int.Parse(colonSplitted[2]));
+                            (int) Math.Floor(int.Parse(colonSplitted[2]) / 1000.0));
                     case "C": // Coinpack appearance message
                         // C:<x>,<y>:<LT>:<Val>#
                         var locationC = InputConvertors.SplitByComma(colonSplitted[1]).Select(int.Parse).ToArray();
 
                         return new CoinpackMessage(
                             new Point(locationC[0], locationC[1]),
-                            // BUG What server sends is two coin values:
-                            // the value at the beginning and the value at the end.
-                            // The time that when the lifepack disappears should be a constant. 
-                            int.Parse(colonSplitted[2]),
-                            int.Parse(colonSplitted[3]));
+                            // What server sends is in milliseconds?
+                            (int) Math.Floor(int.Parse(colonSplitted[2]) / 1000.0),
+                            int.Parse(colonSplitted[2]));
                     default: // Unknown message
                         throw new UnknownMessageException(message);
                     // return null;
@@ -142,6 +140,8 @@ namespace Astute.Communication.Messages
                 return new CommandFailMessage((CommandFailState) Enum.Parse(typeof(CommandFailState), camelCaseCode));
             if (Enum.GetNames(typeof(JoinFailState)).Contains(camelCaseCode))
                 return new JoinFailMessage((JoinFailState) Enum.Parse(typeof(JoinFailState), camelCaseCode));
+            if (Enum.GetNames(typeof(DeathState)).Contains(camelCaseCode))
+                return new DeathMessage((DeathState) Enum.Parse(typeof(DeathState), camelCaseCode));
             // TODO Add PITFALL# plus all death messages. 
             throw new UnknownMessageException(message);
             // return null;

@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Reactive;
 using System.Text;
 using NLog;
+using static Astute.Configuration.Configuration;
 
 namespace Astute.Communication
 {
@@ -19,7 +20,7 @@ namespace Astute.Communication
                     try
                     {
                         Logger.Trace($"Sending: {stringOutput}");
-                        using (var client = new TcpClient("127.0.0.1", 6000))
+                        using (var client = new TcpClient(Config.SendToIP, Config.SendToPort))
                         {
                             var data = Encoding.UTF8.GetBytes(stringOutput);
                             client.GetStream().Write(data, 0, data.Length);

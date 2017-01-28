@@ -5,30 +5,21 @@ namespace Astute.Configuration
     [JsonObject]
     public class Configuration
     {
-        [JsonProperty]
-        [JsonRequired]
-        public int GridSize { get; set; }
+        public static Configuration Config { get; } = FileIO.LoadConfiguration() ?? new Configuration();
 
-        [JsonProperty]
-        [JsonRequired]
-        public string ListenOnIP { get; set; }
+        public int GridSize { get; set; } = 10;
 
-        [JsonProperty]
-        [JsonRequired]
-        public int ListenOnPort { get; set; }
+        public string ListenOnIP { get; set; } = "127.0.0.1";
 
-        [JsonProperty]
-        [JsonRequired]
-        public string SendToIP { get; set; }
+        public int ListenOnPort { get; set; } = 7000;
 
-        [JsonProperty]
-        [JsonRequired]
-        public int SendToPort { get; set; }
+        public string SendToIP { get; set; } = "127.0.0.1";
+
+        public int SendToPort { get; set; } = 6000;
 
         #region Hacks
 
-        [JsonIgnore]
-        public bool EnableBurstFire { get; set; }
+        public bool EnableBurstFire { get; set; } = false;
 
         #endregion
     }

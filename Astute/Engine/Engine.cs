@@ -19,7 +19,8 @@ namespace Astute.Engine
         /// <param name="state">The state of the world</param>
         /// <param name="message">Received message</param>
         /// <returns></returns>
-        public static Command? ComputeCommand(IEnumerable<Tuple<World, Command?>> history, World state, IMessage message)
+        private static Command? ComputeCommand(IEnumerable<Tuple<World, Command?>> history, World state,
+            IMessage message)
         {
             if (!history.Any()) // First time
                 return Command.Join;

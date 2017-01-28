@@ -31,7 +31,7 @@ namespace Astute.Engine
         ///     Returns the calculated command as a string.
         ///     TCP Output should connect here.
         /// </summary>
-        public static IObservable<string> CommandStringStream { get; } =
+        public static IDisposable OutputSubscription { get; } =
             StateAndMessageStream
                 .Scan<Tuple<World, IMessage>, IEnumerable<Tuple<World, Command?>>>(
                     new Tuple<World, Command?>[] {}, MakeHistory
@@ -39,6 +39,7 @@ namespace Astute.Engine
                 .Select(tuples => tuples.Last().Item2)
                 .Where(command => command != null)
                 .Select(command => command.GetValueOrDefault(Command.Shoot))
-                .Select(OutputConvertors.CommandToString);
+                .Select(OutputConvertors.CommandToString)
+                .Subscribe(Output.TcpOutput);
     }
 }

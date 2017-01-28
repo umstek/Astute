@@ -14,7 +14,7 @@ namespace Astute
         {
             Output.TcpOutput.OnNext(OutputConvertors.CommandToString(Command.Join));
 
-            var outputSubscription = SubscriptionManager.CommandStringStream.Subscribe(Output.TcpOutput);
+            var outputSubscription = SubscriptionManager.OutputSubscription;
             var connection = SubscriptionManager.StateAndMessageStream.Connect();
 
             Console.ReadKey();

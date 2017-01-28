@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Astute.Entity;
+using static Astute.Configuration.Configuration;
 
 namespace UX.Renderers
 {
@@ -15,7 +16,7 @@ namespace UX.Renderers
         /// <returns>Rendered grid</returns>
         public static StackPanel RenderGrid(IGridItem[,] items, int gridSize)
         {
-            var slotCount = 20 /* TODO Load from config */;
+            var slotCount = Config.GridSize;
             var slotSize = gridSize / slotCount;
 
             var grid = new StackPanel

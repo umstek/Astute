@@ -117,6 +117,7 @@
     <Compile Include="Communication\Messages\LifepackMessage.cs" />
     <Compile Include="Communication\Messages\MessageFactory.cs" />
     <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Configuration\FileIO.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Engine\SubscriptionManager.cs" />
     <Compile Include="Engine\World.cs" />

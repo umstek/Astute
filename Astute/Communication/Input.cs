@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Reactive.Linq;
 using System.Text;
 using NLog;
+using static Astute.Configuration.Configuration;
 
 namespace Astute.Communication
 {
@@ -23,7 +24,7 @@ namespace Astute.Communication
                     try
                     {
                         // Create and start the listener.
-                        var listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7000);
+                        var listener = new TcpListener(IPAddress.Parse(Config.ListenOnIP), Config.ListenOnPort);
                         listener.Start();
                         Logger.Info("TcpListener started. ");
 
