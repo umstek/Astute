@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using Astute.Communication.Exceptions;
 using Astute.Entity;
@@ -18,26 +17,9 @@ namespace Astute.Communication.Messages
             if (message.Contains(":")) // Long message with information
             {
                 var colonSplitted = InputConvertors.SplitByColon(InputConvertors.TrimHash(message)).ToArray();
-                Debug.WriteLine(message);
 
                 switch (colonSplitted[0])
                 {
-                    case "S": // Accepted join request reply
-                        // S:P<num>:<player location x>,<player location y>:<direction>#
-                        // BUG Actual format returned is:
-                        // S:P0;0,0;0#
-                        var semicolonSplitted = InputConvertors.SplitBySemicolon(colonSplitted[1]).ToArray();
-                        // var playerNumberS = int.Parse(colonSplitted[1].Substring(1));
-                        var playerNumberS = int.Parse(semicolonSplitted[0].Substring(1));
-                        // var locationS = SplitByComma(colonSplitted[2]).Select(int.Parse).ToArray();
-                        var locationS = InputConvertors.SplitByComma(semicolonSplitted[1]).Select(int.Parse).ToArray();
-                        // var directionS = int.Parse(colonSplitted[3]);
-                        var directionS = int.Parse(semicolonSplitted[2]);
-                        return new JoinMessage(
-                            playerNumberS,
-                            new Point(locationS[0], locationS[1]),
-                            (Direction) directionS);
-
                     case "I": // Initialized game message
                         // I:P<num>:<x>,<y>;<x>,<y>;<x>,<y>;...;<x>,<y>:<x>,<y>;<x>,<y>;<x>,<y>;...;<x>,<y>:<x>,<y>;<x>,<y>;<x>,<y>;...;<x>,<y>#
                         var playerNumberI = int.Parse(colonSplitted[1].Substring(1));
@@ -58,6 +40,31 @@ namespace Astute.Communication.Messages
                             bricks.Select(b => new Point(b[0], b[1])).ToList(),
                             stones.Select(s => new Point(s[0], s[1])).ToList(),
                             waters.Select(w => new Point(w[0], w[1])).ToList());
+
+                    case "S": // Accepted join request reply
+                        // S:P<num>:<player location x>,<player location y>:<direction>#
+                        // BUG Actual format returned is: S:P0;0,0;0:P1;0,19;0:P2;19,0;0#
+
+                        var tanksDetails =
+                            colonSplitted.Skip(1)
+                                .Select(InputConvertors.SplitBySemicolon)
+                                .Select(details =>
+                                {
+                                    var detailsArray = details.ToArray();
+
+                                    var playerNumberS = int.Parse(detailsArray[0].Substring(1));
+                                    var locationS =
+                                        InputConvertors.SplitByComma(detailsArray[1]).Select(int.Parse).ToArray();
+                                    var directionS = int.Parse(detailsArray[2]);
+
+                                    return new JoinMessage.TankDetails(
+                                        playerNumberS,
+                                        new Point(locationS[0], locationS[1]),
+                                        (Direction) directionS
+                                    );
+                                });
+
+                        return new JoinMessage(tanksDetails);
 
                     case "G": // Global status update message
                         // G:P1;<player location x>,<player location y>;<direction>;<whether shot>;<health>;<coins>;<points>:...:P5;<player location x>,<player location y>;<direction>;<whether shot>;<health>;<coins>;<points>:<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;<x>,<y>,<damage-level>;..;<x>,<y>,<damage-level>#
@@ -86,7 +93,8 @@ namespace Astute.Communication.Messages
                                             isShot,
                                             health,
                                             coins,
-                                            points);
+                                            points
+                                        );
                                     }).ToList();
 
                         var damageDetails = InputConvertors.SplitBySemicolon(colonSplitted.Last()).Select(details =>

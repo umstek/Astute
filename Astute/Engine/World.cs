@@ -144,15 +144,17 @@ namespace Astute.Engine
         /// <returns>New world based on both the old world and the JoinMessage. </returns>
         public static World FromJoinMessage(World oldWorld, JoinMessage message)
         {
-            return new World(message.PlayerNumber /* == oldWorld.PlayerNumber? */)
+            var tanks =
+                message.TanksDetails.Select(tankDetails =>
+                    new Tank(tankDetails.Location, tankDetails.FacingDirection, tankDetails.PlayerNumber, false)
+                );
+
+            return new World(oldWorld.PlayerNumber)
             {
                 BrickWalls = oldWorld.BrickWalls,
                 StoneWalls = oldWorld.StoneWalls,
                 Waters = oldWorld.Waters,
-                Tanks = new HashSet<Tank>
-                {
-                    new Tank(message.Location, message.FacingDirection, message.PlayerNumber, true)
-                }
+                Tanks = new HashSet<Tank>(tanks)
             };
         }
 
