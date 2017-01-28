@@ -1,4 +1,5 @@
-﻿using Astute.Communication.Exceptions;
+﻿using System.Linq;
+using Astute.Communication.Exceptions;
 using Astute.Communication.Messages;
 using Astute.Entity;
 using NUnit.Framework;
@@ -221,7 +222,8 @@ namespace UnitTest.Communication.Messages
         {
             var joinMessageString = "S:P0;0,0;0#";
             var joinMessage = MessageFactory.GetMessage(joinMessageString);
-            var joinMessageExpected = new JoinMessage(0, new Point(0, 0), Direction.North);
+            var joinMessageExpected =
+                new JoinMessage(new[] {new JoinMessage.TankDetails(0, new Point(0, 0), Direction.North)});
 
             Assert.NotNull(joinMessage);
             Assert.IsInstanceOf<JoinMessage>(joinMessage);
@@ -230,11 +232,12 @@ namespace UnitTest.Communication.Messages
             var joinMessageCast = joinMessage as JoinMessage;
             Assume.That(joinMessageCast, Is.Not.Null);
 
-            Assert.AreEqual(new Point(0, 0), joinMessageCast?.Location);
-            Assert.AreEqual(Direction.North, joinMessageCast?.FacingDirection);
-            Assert.AreEqual(0, joinMessageCast?.PlayerNumber);
+            Assert.AreEqual(new Point(0, 0), joinMessageCast?.TanksDetails?.ToArray()[0].Location);
+            Assert.AreEqual(Direction.North, joinMessageCast?.TanksDetails?.ToArray()[0].FacingDirection);
+            Assert.AreEqual(0, joinMessageCast?.TanksDetails?.ToArray()[0].PlayerNumber);
 
-            var joinMessageUnexpected = new JoinMessage(0, new Point(1, 1), Direction.North);
+            var joinMessageUnexpected =
+                new JoinMessage(new[] {new JoinMessage.TankDetails(0, new Point(1, 1), Direction.North)});
 
             Assert.AreNotEqual(joinMessageUnexpected, joinMessageCast);
             Assert.True(joinMessageCast != joinMessageUnexpected);

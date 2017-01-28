@@ -19,7 +19,7 @@ namespace Astute.Communication.Messages
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return TanksDetails.Count() == other.TanksDetails.Count() &&
-                            TanksDetails.All(other.TanksDetails.Contains);
+                   TanksDetails.All(other.TanksDetails.Contains);
         }
 
         public override bool Equals(object obj)
@@ -27,7 +27,7 @@ namespace Astute.Communication.Messages
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             // ReSharper disable once CanBeReplacedWithTryCastAndCheckForNull
-            return obj is JoinMessage && Equals((JoinMessage)obj);
+            return obj is JoinMessage && Equals((JoinMessage) obj);
         }
 
         public override int GetHashCode()
@@ -71,7 +71,7 @@ namespace Astute.Communication.Messages
                 if (ReferenceEquals(null, obj)) return false;
                 if (ReferenceEquals(this, obj)) return true;
                 // ReSharper disable once CanBeReplacedWithTryCastAndCheckForNull
-                return obj is TankDetails && Equals((TankDetails)obj);
+                return obj is TankDetails && Equals((TankDetails) obj);
             }
 
             public override int GetHashCode()
@@ -80,7 +80,7 @@ namespace Astute.Communication.Messages
                 {
                     var hashCode = PlayerNumber;
                     hashCode = (hashCode * 397) ^ Location.GetHashCode();
-                    hashCode = (hashCode * 397) ^ (int)FacingDirection;
+                    hashCode = (hashCode * 397) ^ (int) FacingDirection;
                     return hashCode;
                 }
             }
@@ -95,6 +95,5 @@ namespace Astute.Communication.Messages
                 return !Equals(left, right);
             }
         }
-
     }
 }

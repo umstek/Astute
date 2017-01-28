@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using Astute.Communication;
 using Astute.Communication.Messages;
 using Astute.Engine;
@@ -30,7 +29,7 @@ namespace UX
         {
             if (Dispatcher.CheckAccess()) // Accessing from UI thread. 
             {
-                var grid = GridRenderer.RenderGrid(world.GridItems, (int)Math.Floor(MainGrid.ActualHeight));
+                var grid = GridRenderer.RenderGrid(world.GridItems, (int) Math.Floor(MainGrid.ActualHeight));
 
                 MainGrid.Children.Clear();
                 MainGrid.Children.Add(grid);

@@ -19,7 +19,7 @@ namespace Astute.Engine
         ///     Creates an empty world.
         /// </summary>
         /// <param name="playerNumber">The number of the player which the client is assigned to. </param>
-        public World(int playerNumber)
+        private World(int playerNumber)
         {
             PlayerNumber = playerNumber;
         }
@@ -38,10 +38,10 @@ namespace Astute.Engine
         public HashSet<BrickWall> BrickWalls
         {
             get { return _brickWalls; }
-            set
+            private set
             {
                 _brickWalls = value;
-                foreach (var brickWall in _brickWalls)
+                foreach (var brickWall in _brickWalls) // Impure
                     GridItems[brickWall.Location.X, brickWall.Location.Y] = brickWall;
             }
         }
@@ -52,10 +52,10 @@ namespace Astute.Engine
         public HashSet<StoneWall> StoneWalls
         {
             get { return _stoneWalls; }
-            set
+            private set
             {
                 _stoneWalls = value;
-                foreach (var stoneWall in _stoneWalls)
+                foreach (var stoneWall in _stoneWalls) // Impure
                     GridItems[stoneWall.Location.X, stoneWall.Location.Y] = stoneWall;
             }
         }
@@ -66,10 +66,10 @@ namespace Astute.Engine
         public HashSet<Water> Waters
         {
             get { return _waters; }
-            set
+            private set
             {
                 _waters = value;
-                foreach (var water in _waters)
+                foreach (var water in _waters) // Impure
                     GridItems[water.Location.X, water.Location.Y] = water;
             }
         }
@@ -80,10 +80,12 @@ namespace Astute.Engine
         public HashSet<Tank> Tanks
         {
             get { return _tanks; }
-            set
+            private set
             {
                 _tanks = value;
-                foreach (var tank in _tanks)
+                foreach (var tank in _tanks) // Impure
+                    // If tank placed in the same slot as a CoinPack or LifePack, 
+                    // the CoinPack or LifePck must disappear. This is handled in the factory methods. 
                     GridItems[tank.Location.X, tank.Location.Y] = tank;
             }
         }
@@ -94,10 +96,10 @@ namespace Astute.Engine
         public HashSet<Lifepack> Lifepacks
         {
             get { return _lifepacks; }
-            set
+            private set
             {
                 _lifepacks = value;
-                foreach (var lifepack in _lifepacks)
+                foreach (var lifepack in _lifepacks) // Impure
                     GridItems[lifepack.Location.X, lifepack.Location.Y] = lifepack;
             }
         }
@@ -108,10 +110,10 @@ namespace Astute.Engine
         public HashSet<Coinpack> Coinpacks
         {
             get { return _coinpacks; }
-            set
+            private set
             {
                 _coinpacks = value;
-                foreach (var coinpack in _coinpacks)
+                foreach (var coinpack in _coinpacks) // Impure
                     GridItems[coinpack.Location.X, coinpack.Location.Y] = coinpack;
             }
         }
@@ -121,7 +123,7 @@ namespace Astute.Engine
         /// </summary>
         /// <param name="message">Initiation message is the first message received by the client. </param>
         /// <returns>New world based on the InitiationMessage. </returns>
-        public static World FromInitiationMessage(InitiationMessage message)
+        private static World FromInitiationMessage(InitiationMessage message)
         {
             var brickWalls = message.Bricks.ToArray().Select(point => new BrickWall(point));
             var stoneWalls = message.Stones.ToArray().Select(point => new StoneWall(point));
@@ -142,11 +144,12 @@ namespace Astute.Engine
         /// <param name="oldWorld">The old world created using the InitiationMessage. </param>
         /// <param name="message">JoinMessage is the message received when the game starts. </param>
         /// <returns>New world based on both the old world and the JoinMessage. </returns>
-        public static World FromJoinMessage(World oldWorld, JoinMessage message)
+        private static World FromJoinMessage(World oldWorld, JoinMessage message)
         {
             var tanks =
                 message.TanksDetails.Select(tankDetails =>
-                    new Tank(tankDetails.Location, tankDetails.FacingDirection, tankDetails.PlayerNumber, false)
+                    new Tank(tankDetails.Location, tankDetails.FacingDirection, tankDetails.PlayerNumber, false,
+                        tankDetails.PlayerNumber == oldWorld.PlayerNumber)
                 );
 
             return new World(oldWorld.PlayerNumber)
@@ -164,9 +167,9 @@ namespace Astute.Engine
         /// <param name="oldWorld">The current state of the world. </param>
         /// <param name="message">The BroadcastMessage received. </param>
         /// <returns>New world based on both the old world and the BroadcastMessage. </returns>
-        public static World FromBroadcastMessage(World oldWorld, BroadcastMessage message)
+        private static World FromBroadcastMessage(World oldWorld, BroadcastMessage message)
         {
-            var brickWalls = message.DamagesDetails.ToArray().Select(details =>
+            var brickWalls = message.DamagesDetails.Select(details =>
             {
                 var oldBrickWall = oldWorld.GridItems[details.Location.X, details.Location.Y] as BrickWall;
                 // Assumption: BrickWall is the only thing which gets damaged.
@@ -176,7 +179,7 @@ namespace Astute.Engine
                 return newBrickWall;
             });
 
-            var tanks = message.PlayersDetails.ToArray()
+            var tanks = message.PlayersDetails
                 .Select(details =>
                     new Tank(details.Location, details.Health, details.FacingDirection, details.Points,
                         details.Coins, details.PlayerNumber, details.PlayerNumber == oldWorld.PlayerNumber)
@@ -196,7 +199,8 @@ namespace Astute.Engine
                 Coinpacks =
                     new HashSet<Coinpack>(
                         oldWorld.Coinpacks.ToList()
-                            .Where(coinpack => coinpack.TimeToDisappear > 1)
+                            .Where(coinpack => coinpack.TimeToDisappear > 1) // ?
+                            .Where(coinpack => !tanks.Select(tank => tank.Location).Contains(coinpack.Location))
                             .Select(coinpack =>
                                 new Coinpack(coinpack.Location, coinpack.CoinValue, coinpack.TimeToDisappear - 1)
                             )
@@ -204,7 +208,8 @@ namespace Astute.Engine
                 Lifepacks =
                     new HashSet<Lifepack>(
                         oldWorld.Lifepacks.ToList()
-                            .Where(lifepack => lifepack.TimeToDisappear > 1)
+                            .Where(lifepack => lifepack.TimeToDisappear > 1) // ?
+                            .Where(lifepack => !tanks.Select(tank => tank.Location).Contains(lifepack.Location))
                             .Select(lifepack =>
                                 new Lifepack(lifepack.Location, lifepack.HealthValue, lifepack.TimeToDisappear - 1)
                             )
@@ -218,7 +223,7 @@ namespace Astute.Engine
         /// <param name="oldWorld">Current state of the world. </param>
         /// <param name="message">The CoinpackMessage received. </param>
         /// <returns>New world based on both the old world and the CoinpackMessage. </returns>
-        public static World FromCoinpackMessage(World oldWorld, CoinpackMessage message)
+        private static World FromCoinpackMessage(World oldWorld, CoinpackMessage message)
         {
             var coinpack = new Coinpack(message.Location, message.CoinValue, message.RemainingTime);
             return new World(oldWorld.PlayerNumber)
@@ -238,7 +243,7 @@ namespace Astute.Engine
         /// <param name="oldWorld">Current state of the world. </param>
         /// <param name="message">The LifepackMessage received. </param>
         /// <returns>New world based on both the old world and the LifepackMessage. </returns>
-        public static World FromLifepackMessage(World oldWorld, LifepackMessage message)
+        private static World FromLifepackMessage(World oldWorld, LifepackMessage message)
         {
             var lifepack = new Lifepack(message.Location, message.RemainingTime);
             return new World(oldWorld.PlayerNumber)
