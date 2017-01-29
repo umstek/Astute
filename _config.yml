@@ -1,0 +1,8 @@
+title: Astute
+description: "An astute networking tanks game client. "
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-architect
+
+gems:
+  - jekyll-mentions
