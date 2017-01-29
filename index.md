@@ -1,10 +1,7 @@
 # Astute
 An astute networking tanks game client. 
 
-## Setting-up
-1. Clone the project.  
-2. Open with Visual Studio.
-3. Right Click on the solution in Solution Explorer and select Restore NuGet Packages. 
+[Setting up](setting-up.md)  
 
 Copyright © 2016 H. A. W. Abeygunawardhana and K. P. T. K. Bandara.  
 All Rights Reserved.  
