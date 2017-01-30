@@ -17,6 +17,8 @@ namespace UX.Renderers
         /// <returns>Rendered view of grid item</returns>
         public static Rectangle RenderGridItem(IGridItem gridItem, int squareSize)
         {
+            // ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
+
             if (gridItem is Tank)
                 return RenderTank((Tank) gridItem, squareSize);
 
@@ -35,6 +37,8 @@ namespace UX.Renderers
             if (gridItem is Water)
                 return RenderWater((Water) gridItem, squareSize);
 
+            // ReSharper restore CanBeReplacedWithTryCastAndCheckForNull
+
             return new Rectangle
             {
                 Width = squareSize,
@@ -44,11 +48,47 @@ namespace UX.Renderers
         }
 
         /// <summary>
+        ///     Render a bullet.
+        /// </summary>
+        /// <param name="tank">The tank which fired the bullet</param>
+        /// <param name="squareSize">maximum size of the square</param>
+        /// <returns>Rendered view of bullet</returns>
+        public static Rectangle RenderBullet(Tank tank, int squareSize)
+        {
+            // <iconPacks:PackIconMaterial Kind="DotsVertical" />
+            var angle = (int) tank.Direction * 90;
+            var color = tank.MyTank ? Colors.White : TankColors[tank.PlayerNumber % TankColors.Length];
+            ;
+
+            return new Rectangle
+            {
+                Width = squareSize,
+                Height = squareSize,
+                Fill = new VisualBrush(
+                    new PackIconMaterial
+                    {
+                        Kind = PackIconMaterialKind.DotsVertical,
+                        Foreground = new SolidColorBrush(color),
+                        Rotation = angle,
+                        Effect = new DropShadowEffect
+                        {
+                            Color = color,
+                            Direction = 0,
+                            Opacity = 1,
+                            ShadowDepth = 0
+                        }
+                    }
+                ),
+                Stroke = new SolidColorBrush(Colors.DimGray)
+            };
+        }
+
+        /// <summary>
         ///     Render a tank.
         /// </summary>
         /// <param name="tank">Tanks model</param>
         /// <param name="squareSize">Maximum size of the tank</param>
-        /// <returns></returns>
+        /// <returns>Rendered view of tank</returns>
         private static Rectangle RenderTank(Tank tank, int squareSize)
         {
             // Use a navigation icon for other tanks.
@@ -77,7 +117,8 @@ namespace UX.Renderers
                             ShadowDepth = 0
                         }
                     }
-                )
+                ),
+                Stroke = new SolidColorBrush(Colors.DimGray)
             };
 
             return rectangle;
@@ -108,7 +149,8 @@ namespace UX.Renderers
                             ShadowDepth = 0
                         }
                     }
-                )
+                ),
+                Stroke = new SolidColorBrush(Colors.DimGray)
             };
 
             return rectangle;
@@ -139,7 +181,8 @@ namespace UX.Renderers
                             ShadowDepth = 0
                         }
                     }
-                )
+                ),
+                Stroke = new SolidColorBrush(Colors.DimGray)
             };
 
             return rectangle;
@@ -165,7 +208,8 @@ namespace UX.Renderers
                         Foreground = new SolidColorBrush(Colors.Brown),
                         Opacity = brickWall.Health * 25 / 100.0
                     }
-                )
+                ),
+                Stroke = new SolidColorBrush(Colors.DimGray)
             };
 
             return rectangle;
@@ -190,7 +234,8 @@ namespace UX.Renderers
                         Rotation = 180, // when rotated by 180 degrees
                         Foreground = new SolidColorBrush(Colors.Gray)
                     }
-                )
+                ),
+                Stroke = new SolidColorBrush(Colors.DimGray)
             };
 
             return rectangle;
@@ -214,7 +259,8 @@ namespace UX.Renderers
                         Kind = PackIconMaterialKind.Texture, // Looks like water
                         Foreground = new SolidColorBrush(Colors.DodgerBlue)
                     }
-                )
+                ),
+                Stroke = new SolidColorBrush(Colors.DimGray)
             };
 
             return rectangle;

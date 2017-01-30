@@ -177,13 +177,21 @@ namespace Astute.Engine
                 Trace.Assert(oldBrickWall != null);
                 var newBrickWall = new BrickWall(oldBrickWall.Health, oldBrickWall.Location);
                 return newBrickWall;
-            });
+            }).ToArray();
 
             var tanks = message.PlayersDetails
                 .Select(details =>
-                    new Tank(details.Location, details.Health, details.FacingDirection, details.Points,
-                        details.Coins, details.PlayerNumber, details.PlayerNumber == oldWorld.PlayerNumber)
-                );
+                    new Tank(
+                        details.Location,
+                        details.Health,
+                        details.FacingDirection,
+                        details.Points,
+                        details.Coins,
+                        details.PlayerNumber,
+                        details.IsShot,
+                        details.PlayerNumber == oldWorld.PlayerNumber
+                    )
+                ).ToArray();
 
             return new World(oldWorld.PlayerNumber)
             {
@@ -198,7 +206,7 @@ namespace Astute.Engine
                 // TODO Identify what the server sends (does it actually sends time to disappear?).
                 Coinpacks =
                     new HashSet<Coinpack>(
-                        oldWorld.Coinpacks.ToList()
+                        oldWorld.Coinpacks
                             .Where(coinpack => coinpack.TimeToDisappear > 1) // ?
                             .Where(coinpack => !tanks.Select(tank => tank.Location).Contains(coinpack.Location))
                             .Select(coinpack =>
@@ -207,7 +215,7 @@ namespace Astute.Engine
                     ),
                 Lifepacks =
                     new HashSet<Lifepack>(
-                        oldWorld.Lifepacks.ToList()
+                        oldWorld.Lifepacks
                             .Where(lifepack => lifepack.TimeToDisappear > 1) // ?
                             .Where(lifepack => !tanks.Select(tank => tank.Location).Contains(lifepack.Location))
                             .Select(lifepack =>
