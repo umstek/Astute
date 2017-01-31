@@ -2,6 +2,8 @@
 An astute networking tanks game client. 
 
 [Setting up](setting-up.md)  
+[Architecture](architecture.md)  
+[Used Technologies](tech.md)  
 
 Copyright © 2016 H. A. W. Abeygunawardhana and K. P. T. K. Bandara.  
 All Rights Reserved.  
