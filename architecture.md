@@ -31,3 +31,5 @@ Graphical user interface and the processing that is needed to render the grid an
 
 ### Logging Layer
 Provides basic functionality for logging everything for the sake of debugging. 
+
+![Layers](layers.png)  
