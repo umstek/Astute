@@ -53,12 +53,11 @@ namespace UX.Renderers
         /// <param name="tank">The tank which fired the bullet</param>
         /// <param name="squareSize">maximum size of the square</param>
         /// <returns>Rendered view of bullet</returns>
-        public static Rectangle RenderBullet(Tank tank, int squareSize)
+        public static Rectangle RenderBullet(Direction direction, int squareSize)
         {
             // <iconPacks:PackIconMaterial Kind="DotsVertical" />
-            var angle = (int) tank.Direction * 90;
-            var color = tank.MyTank ? Colors.White : TankColors[tank.PlayerNumber % TankColors.Length];
-            ;
+            var angle = (int) direction * 90;
+            var color = Colors.White;
 
             return new Rectangle
             {
